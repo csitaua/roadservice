@@ -1,0 +1,361 @@
+
+* { margin: 0; padding: 0; }
+/*body { padding: 50px; background: #A6CEB5 url(images/grad1.png) 0 0 repeat-x; color: #d9d9d9; font: 14px/normal Tahoma, Arial, Helvetica, sans-serif; }*/
+body { padding: 50px;  color: #000; font: 14px/normal Tahoma, Arial, Helvetica, sans-serif; width:1200px; margin:auto; background-size:100% 100%; background:url(../images/bg/rr_background.jpg) ; -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover; }
+h1 { margin-bottom: .5em; border-bottom: solid 1px #d9d9d9; font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 180%; text-indent: 5px; letter-spacing: -1px; }
+h8 { font-family: Arial, Helvetica, sans-serif; font-weight: bolder; font-size: 28px; letter-spacing: 2px;}
+h9 { font-family: Arial, Helvetica, sans-serif; font-weight: bolder; font-size: 20px; letter-spacing: 2px;}
+cite { float: right; }
+ul.classic { list-style: disc; margin-bottom: 1em; padding-left: 2em; }
+div.section { clear: both; padding-top: 50px; }
+
+.table1 { float: right; margin-bottom: 2em; border: solid 1px #eee; }
+.table1 caption { color: #fff; text-align: center; padding-bottom: 5px; }
+.table1 th, .table1 td { padding: 7px; }
+.table1 th, .table1 thead td { background-color: lightyellow; color: #000; }
+.table1 tbody td { background-color: #fff; color: #000; }
+.table1 tbody th { text-align: right; }
+tr.thead{ background-color:#ECF65C;}
+#closeddt{background-color:#FAD090;}
+#opendt{background-color:#FAD090;}
+#srepdate{background-color:#FAD090;}
+#manu_date{background-color:#FAD090;}
+#time_out{background-color:#FAD090;}
+#time_in{background-color:#FAD090;}
+#time_in_exp{background-color:#FAD090;}
+#pick_date_time{background-color:#FAD090;}
+#wmfg { clear: both; float: left; }
+
+#birthDay_day{background-color:#FAD090;}
+#birthDay_month{background-color:#FAD090;}
+#birthDay_year{background-color:#FAD090;}
+
+#expireDate_day{background-color:#FAD090;}
+#expireDate_month{background-color:#FAD090;}
+#expireDate_year{background-color:#FAD090;}
+
+input.fill {background-color:#FAD090}
+select.fill {background-color:#FAD090}
+a.squarebutton{
+background: transparent url('../images/square-orange-left.gif') no-repeat top left;
+display: block;
+float: left;
+font: normal 12px Arial; /* Change 12px as desired */
+line-height: 15px; /* This value + 4px + 4px (top and bottom padding of SPAN) must equal height of button background (default is 23px) */
+height: 23px; /* Height of button background height */
+padding-left: 9px; /* Width of left menu image */
+text-decoration: none;
+}
+
+a.squarebuttonm{
+background: transparent url('../images/square-orange-left.gif') no-repeat top left;
+display: block;
+float: left;
+font: normal 12px Arial; /* Change 12px as desired */
+line-height: 15px; /* This value + 4px + 4px (top and bottom padding of SPAN) must equal height of button background (default is 23px) */
+height: 23px; /* Height of button background height */
+padding-left: 9px; /* Width of left menu image */
+text-decoration: none;
+border:3px solid #FF0000;
+}
+
+a:link.squarebutton, a:visited.squarebutton, a:active.squarebutton{
+color: #494949; /*button text color*/
+}
+
+a.squarebutton span{
+background: transparent url('../images/square-orange-right.gif') no-repeat top right;
+display: block;
+padding: 4px 9px 4px 0; /*Set 9px below to match value of 'padding-left' value above*/
+}
+
+a.squarebuttonm span{
+background: transparent url('../images/square-orange-right.gif') no-repeat top right;
+display: block;
+padding: 4px 9px 4px 0; /*Set 9px below to match value of 'padding-left' value above*/
+}
+
+a.squarebutton:hover{ /* Hover state CSS */
+background-position: bottom left;
+}
+
+a.squarebutton:hover span{ /* Hover state CSS */
+background-position: bottom right;
+color: black;
+}
+
+.buttonwrapper{ /* Container you can use to surround a CSS button to clear float */
+overflow: hidden; /*See: http://www.quirksmode.org/css/clearing.html */
+width: 100%;
+}
+
+div.rounded_h{
+	background-color: #FFFFBE;
+	font-weight: bold;
+	padding: 10px;
+	border-style:solid;
+	border-width: 1px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+}
+
+div.rounded{
+	background-color:#FFF;
+	padding: 5px;
+	border-style:solid;
+	border-width: 1px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+}
+
+table td.child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-width: 1px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+}
+
+full_table{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-width: 1px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px 15px 15px 15px;
+}
+
+table td.left-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:1px;
+	border-bottom-width:1px;
+	border-right-width:0px;
+	border-left-width:1px;
+	border-color:#000;
+	-moz-border-radius-topleft:15px;
+	-webkit-border-top-left-radius:15px;
+	border-top-left-radius:15px;
+	-moz-border-radius-bottomleft:15px;
+	-webkit-border-bottom-left-radius:15px;
+	border-bottom-left-radius:15px;
+}
+
+table td.right-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:1px;
+	border-bottom-width:1px;
+	border-right-width:1px;
+	border-left-width:0px;
+	border-color:#000;
+	-moz-border-radius-topright:15px;
+	-webkit-border-top-right-radius:15px;
+	border-top-right-radius:15px;
+	-moz-border-radius-bottomright:15px;
+	-webkit-border-bottom-right-radius:15px;
+	border-bottom-right-radius:15px;
+	border-left-style:none;
+}
+
+table td.top-child_h{
+	background-color: #FFFFBE;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:1px;
+	border-bottom-width:0px;
+	border-right-width:1px;
+	border-left-width:1px;
+	border-color:#000;
+	-moz-border-radius-topright:15px;
+	-webkit-border-top-right-radius:15px;
+	border-top-right-radius:15px;
+	-moz-border-radius-topleft:15px;
+	-webkit-border-top-left-radius:15px;
+	border-top-left-radius:15px;
+}
+
+table td.top-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:1px;
+	border-bottom-width:0px;
+	border-right-width:1px;
+	border-left-width:1px;
+	border-color:#000;
+	-moz-border-radius-topright:15px;
+	-webkit-border-top-right-radius:15px;
+	border-top-right-radius:15px;
+	-moz-border-radius-topleft:15px;
+	-webkit-border-top-left-radius:15px;
+	border-top-left-radius:15px;
+}
+
+table td.top-left-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:1px;
+	border-bottom-width:0px;
+	border-right-width:0px;
+	border-left-width:1px;
+	border-color:#000;
+	border-radius:15px 0 0 0;
+	-moz-border-radius-topleft:15px;
+	-webkit-border-top-left-radius:15px;
+	border-spacing:0;
+	box-shadow: 0 0 0 0;
+		
+}
+
+table td.top-right-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:1px;
+	border-bottom-width:0px;
+	border-right-width:1px;
+	border-left-width:0px;
+	border-color:#000;
+	-moz-border-radius-topright:15px;
+	-webkit-border-top-right-radius:15px;
+	border-top-right-radius:15px;
+}
+
+table td.top-center-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width: 1px;
+	border-bottom-width:0px;
+	border-left-width:0px;
+	border-right-width:0px;
+	border-color:#000;	
+}
+
+table td.bottom-left-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:0px;
+	border-bottom-width:1px;
+	border-right-width:0px;
+	border-left-width:1px;
+	border-color:#000;
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+	-moz-border-radius-bottomleft:15px;
+	-webkit-border-bottom-left-radius:15px;
+	border-bottom-left-radius:15px;	
+}
+table td.bottom-right-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:0px;
+	border-bottom-width:1px;
+	border-right-width:1px;
+	border-left-width:0px;
+	border-color:#000;
+	-moz-border-radius-bottomright:15px;
+	-webkit-border-bottom-right-radius:15px;
+	border-bottom-right-radius:15px;	
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;	
+}
+
+table td.bottom-center-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:0px;
+	border-bottom-width:1px;
+	border-right-width:0px;
+	border-left-width:0px;
+	border-color:#000;	
+}
+
+table td.bottom-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:0px;
+	border-bottom-width:1px;
+	border-right-width:1px;
+	border-left-width:1px;
+	border-color:#000;
+	-moz-border-radius-bottomright:15px;
+	-webkit-border-bottom-right-radius:15px;
+	border-bottom-right-radius:15px;	
+	-moz-border-radius-bottomleft:15px;
+	-webkit-border-bottom-left-radius:15px;
+	border-bottom-left-radius:15px;	
+}
+
+table td.middle-left-child{
+	border-spacing:0;
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:0px;
+	border-bottom-width:0px;
+	border-right-width:0px;
+	border-left-width:1px;
+	border-color:#000;
+}
+
+table td.middle-right-child{
+	border-spacing:0;
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:0px;
+	border-bottom-width:0px;
+	border-right-width:1px;
+	border-left-width:0px;
+	border-color:#000;
+}
+
+table td.middle-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:0px;
+	border-bottom-width:0px;
+	border-right-width:1px;
+	border-left-width:1px;
+	border-bottom:0;
+	border-color:#000;
+}
+
+table td.middle-full-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+	border-style:solid;
+	border-top-width:1px;
+	border-bottom-width:1px;
+	border-right-width:0px;
+	border-left-width:0px;
+	border-color:#000;
+}
+
+table td.middle-none-child{
+	background-color: #F3FFE7;
+	padding: 5px;
+}
+
+.AnyTime-pkr { z-index: 9999 }
+

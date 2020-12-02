@@ -1,0 +1,84 @@
+.forms {
+font: normal 12px arial,verdana;
+padding: 3px;
+}
+.myaccount {
+font: normal 12px arial,verdana;
+padding: 2px 5px;
+
+}
+
+a {
+color: #03c;
+}
+
+body{	
+	color: #000;
+    font: 14px Tahoma,Arial,Helvetica,sans-serif;
+    padding: 50px;
+	text-align:center;
+}
+
+.main {
+font: normal 12px arial,verdana;
+padding: 2px;
+margin: 2px;
+
+ }
+ 
+ .titlehdr {
+ font: normal 22px arial, verdana;
+ color: #000;
+ border-bottom: 1px solid #000;
+ 
+ 
+ }
+ 
+.msg {
+padding: 5px;
+width: 600px;
+margin: 2px;
+color: #c00;
+border: 1px solid #000;
+font: bold 13px  verdana;
+} 
+ 
+.error {
+font: normal 11px arial, verdana;
+color: #c00;
+border: 1px solid #c00;
+padding: 2px;
+margin: 5px;
+float: left;
+background-color: #FEF1ED;
+}
+ 
+ .example {
+font: normal 10px arial;
+color: red;
+}
+.approved {
+font: normal 10px arial;
+color: green;
+}
+
+.loginform {
+color: #000;
+font: 14px Tahoma,Arial,Helvetica,sans-serif;
+border: 1px solid #000;
+}
+
+.loginform #txtbox {
+font: bold 16px arial;
+color: #000;
+}
+
+h1 {
+    border-bottom: 1px solid #D9D9D9;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 180%;
+    font-weight: normal;
+    letter-spacing: -1px;
+    margin-bottom: 0.5em;
+    text-indent: 5px;
+}

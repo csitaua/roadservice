@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\PHP\v5.3\php.exe" -f D:\web\roadservice\vehicle_total.php
