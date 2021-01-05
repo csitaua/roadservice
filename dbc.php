@@ -33,6 +33,7 @@ $conn=mssql_select_db("insproSQL",$connt);
 $user_registration = 1;  // set 0 or 1
 define("COOKIE_TIME_OUT", 10); //specify cookie timeout in days (default is 10 days)
 define('SALT_LENGTH', 9); // salt for password
+define('PASSWORD_MIN_LENGTH',8); // min length for password
 //define ("ADMIN_NAME", "admin"); // sp
 /* Specify user levels */
 define ("ADMIN_LEVEL", 5);
@@ -301,6 +302,18 @@ function sendEmail($to,$from,$subject,$message){
     $mail->AddAddress($to, "2");
    	//$mail->AddAttachment($file_path);      // some attached files/
 	$mail->Send();
+}
+// var pwd password returns true if meeting lenght and complexity
+function checkPwdComp($pwd){
+  $uppercase = preg_match('@[A-Z]@', $pwd);
+  $lowercase = preg_match('@[a-z]@', $pwd);
+  $number    = preg_match('@[0-9]@', $pwd);
+  $specialChars = preg_match('@[^\w]@', $pwd);
+
+  if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($pwd) < PASSWORD_MIN_LENGTH){
+    return false;
+  }
+  return true;
 }
 function getCurrency(){
 	$dbi = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);

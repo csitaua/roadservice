@@ -3,8 +3,10 @@
 
 
 define ("DB_HOST", "localhost"); // set database host
-define ("DB_USER", "web"); // set database user
-define ("DB_PASS","O&8Bd0&iq;A-"); // set database password
+//define ("DB_USER", "web"); // set database user
+//define ("DB_PASS","O&8Bd0&iq;A-"); // set database password
+define ("DB_USER", "root"); // set database user
+define ("DB_PASS",""); // set database passwor
 define ("email_uinser","claims@nagico-abc.com");
 if($_SESSION['country']==='Aruba'){
 	define ("DB_NAME","roadservice"); // set database name
