@@ -118,9 +118,8 @@ $rs_settings = mysql_query("select * from users where id='$_SESSION[user_id]'");
     <td class="w-1/5 align-top px-6 py-6">
 			<div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
 					<h2 class="font-semibold text-lg text-gray-800 leading-tight">My Account</h2>
-					<a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="./">Agent Calculator Home</a><br>
-					<a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="myaccount.php">My Account</a><br>
-					<a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="mysettings.php">Settings</a><br>
+					<a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="./">Home</a><br>
+					<a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="mysettings.php">My Settings</a><br>
 					<a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="logout.php">Logout </a>
 					<?php
 				if (checkAdmin()) {

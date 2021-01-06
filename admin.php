@@ -140,9 +140,8 @@ list($active) = mysql_fetch_row($rs_active);
 		<div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
 		<?php if (isset($_SESSION['user_id'])) {?>
 		  <h2 class="font-semibold text-lg text-gray-800 leading-tight">My Account</h2>
-		  <a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="./">Road Service Home</a><br>
+		  <a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="./">Home</a><br>
 		  <a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="myaccount.php">My Account</a><br>
-		  <a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="mysettings.php">Settings</a><br>
 	    <a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="logout.php">Logout </a><br>
 		<?php }
 		if (checkAdmin()) {
