@@ -2433,7 +2433,7 @@ $row2 = mssql_fetch_array($rs2);
 
 				$allow_change= array(182,181,153); //Josefa, Milouska, Christa
 
-				if( (($row['status']==1 || $row['status']==4 || $row['status']==8 || $_SESSION['user_level'] > POWER_LEVEL  ) || in_array($_SESSION['user_id'],$allow_change) ) || allowAttendeeStatusChange($row['status'])) {
+				if( (($row['status']==1 || $row['status']==4 || $row['status']==8 || $_SESSION['user_level'] >= POWER_LEVEL  ) || in_array($_SESSION['user_id'],$allow_change) ) || allowAttendeeStatusChange($row['status'])) {
 
 
 

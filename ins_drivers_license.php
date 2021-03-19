@@ -1,16 +1,17 @@
 <?php
 	include 'dbc.php';
+//	ini_set('display_errors', '1');
+//	error_reporting(E_ERROR | E_WARNING | E_PARSE);
 	date_default_timezone_set('America/Aruba');
 	page_protect();
-
-	//error_reporting(E_ALL);
-	//ini_set('display_errors', '1');
-
 	include "support/connect.php";
 	include "support/function.php";
 	if($_SESSION['user_level'] < 2){
 		header('location:index.php');
 	}
+	require 'Controllers/S3RSObjectController.php';
+	use Controllers\S3RSObject;
+	$s3_ob = new S3RSObject();
 
 	if(trim($_REQUEST[num])!== ''){
 		// check extra
@@ -45,28 +46,33 @@
 
 		if (($_FILES["drv_license"]["type"] == "image/jpeg" || $_FILES["drv_license"]["type"] == "image/pjpeg" || $_FILES["drv_license"]["type"] == "image/gif" || $_FILES["drv_license"]["type"] == "image/x-png" || $_FILES["drv_license"]["type"] == "image/png")){
 
-		$path = FOLDER."drivers_license/";
+			$path = FOLDER."drivers_license/";
 
-		$fn = 1;
-		$ext = end(explode('.', $_FILES["drv_license"]["name"]));
-		$file_name = $_POST['licenseNo'].'.'.$ext;
-		//$remote_file = $path.$_FILES["drv_license"]["name"];
-		$remote_file = $path.$_POST['licenseNo'].'.'.$ext;
-
-
-		include('support/simpleimage.php');
-		$image = new SimpleImage();
-		$image->load($_FILES["drv_license"]["tmp_name"]);
-		$image->resizeToWidth(1000);
-		$image->Save($remote_file);
+
+			$fn = 1;
+			$ext = end(explode('.', $_FILES["drv_license"]["name"]));
+			$file_name = $_POST['licenseNo'].'.'.$ext;
+			//$remote_file = $path.$_FILES["drv_license"]["name"];
+			$remote_file = $path.$_POST['licenseNo'].'.'.$ext;
+			echo $s3_ob->putS3Object($_FILES["drv_license"]["tmp_name"],'drivers_license/'.$_POST['licenseNo'].'.JPG',1200,false,85,true);
+
+				/*
+			include('support/simpleimage.php');
+			$image = new SimpleImage();
+			$image->load($_FILES["drv_license"]["tmp_name"]);
+			$image->resizeToWidth(1000);
+			$image->Save($remote_file);
+			*/
 
 		}
+
+		$fl = $_POST['licenseNo'].".JPG";
 
 		$sql="SELECT * FROM drivers_license WHERE id='$_POST[licenseNo]'";
 		$rs = mysql_query($sql);
 		if(mysql_num_rows($rs)!=0){
 			if($_FILES['drv_license']['tmp_name']){
-				$sql="UPDATE drivers_license SET loc='$remote_file' WHERE id='$_POST[licenseNo]'";
+				$sql="UPDATE drivers_license SET loc='$fl' WHERE id='$_POST[licenseNo]'";
 				mysql_query($sql);
 			}
 
@@ -161,7 +167,8 @@ if(strcmp(($_REQUEST['pol']),'')!=0 && mysql_num_rows($rs) < 1){
 			if(mysql_num_rows($rs)!=0){
 				$row = mysql_fetch_array($rs);
 		?>
-            <a target="_blank" href="download.php?file=<?php echo $row['loc'];?>"><img width="400" src="download.php?file=<?php echo $row['loc'];?>" /></a>
+
+            <a target="_blank" href="<?php echo $s3_ob->getS3PresignedURL('drivers_license/'.$row['loc'],5,true); ?>"><img width="400" src="<?php echo $s3_ob->getS3PresignedURL('drivers_license/'.$row['loc'],1,false); ?>" /></a>
         <?php } ?>
             </td>
         </tr>

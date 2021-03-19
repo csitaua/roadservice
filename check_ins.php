@@ -8,12 +8,7 @@ date_default_timezone_set('America/Aruba');
 
 page_protect();
 
-//include "support/connect.php";
 include "support/function.php";
-
-//error_reporting(E_ALL);
-
-//ini_set('display_errors', '1');
 
 if($_SESSION['user_level'] < RR_LEVEL){
 
@@ -24,25 +19,18 @@ if($_SESSION['user_level'] < RR_LEVEL){
 }
 
 
-
 session_start();
 
 
 
 $policy=$_REQUEST['pn'];
-
 $lic = $_REQUEST['lic'];
 
 if($_SESSION['country']==='Aruba'){
-
 	$licc=str_replace("-","",$lic);
-
 }
-
 else{
-
 	$licc=$lic;
-
 }
 
 $name= $_REQUEST['name_lic'];
@@ -198,30 +186,12 @@ $col2 = 250;
 
 				}
 
-				//$sql4="SELECT * FROM vehicles_2 WHERE LicPlateNo = '$lic' ORDER BY FIELD(VehStatus,'A','L','C'), STR_TO_DATE( `Date_Renewal` , '%m/%d/%Y' ) DESC, PolicyNo DESC";
-
 				$rs4 = mssql_query($sql4);
-
 				if($row4 = mssql_fetch_array($rs4)){
-
-
-
 					$license = $row4['Driver1_License'];
-
-					//$license=$row4['LicenseNo'];
-
 					$clientNo = $row4['ClientNo'];
-
-					//echo $row4['VehStatus'];
-
 				}
-
-
-
 				$rowe=mssql_fetch_array($rs4);
-
-
-
 				$e='';
 
 				if($rowe['VehStatus']=='A'){
@@ -249,17 +219,6 @@ $col2 = 250;
 				$dr_found = 0;
 
 
-
-
-
-				//if($row3 = mysql_fetch_array($rs2)){
-
-				//	$dr_found = 1;
-
-				//}
-
-				//else{
-
 					$sql2 = "SELECT * FROM drivers_license WHERE id = '$license'";
 
 					$rs2 = mysql_query($sql2);
@@ -269,16 +228,6 @@ $col2 = 250;
 						$dr_found = 1;
 
 					}
-
-				//}
-
-
-
-				/*$sql = "SELECT * FROM vehicles_2 WHERE LicPlateNo = '$lic' ORDER BY FIELD(VehStatus,'A','L','C'), STR_TO_DATE( `Date_Renewal` , '%m/%d/%Y' ) DESC, PolicyNo DESC";
-
-				$rs = mysql_query($sql);
-
-				$row = mysql_fetch_array($rs);*/
 
 				if(trim($lic)!==''){
 
@@ -1009,12 +958,6 @@ $col2 = 250;
 				else{
 
 					if($in==1){
-
-						//$serverName = HOST_INSPRO;
-
-						//$connectionInfo = array( "Database"=>"insproSQL" , "UID"=>"exportsa", "PWD"=>"nvsql2304@@",'ReturnDatesAsStrings'=>true);
-
-						//$conn = sqlsrv_connect( $serverName, $connectionInfo);
 
 					if(trim($lic)!==''){
 

@@ -1,15 +1,15 @@
 <?php
-
+ini_set('display_errors', '1');
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
 include 'dbc.php';
-
+require 'Controllers/S3RSObjectController.php';
+use Controllers\S3RSObject;
 date_default_timezone_set('America/Aruba');
 
 page_protect();
 
 include "support/function.php";
-
-//session_start();error_reporting(E_ALL);
-//INI_SET('display_errors', '1');
+$s3_ob = new S3RSObject();
 
 $page = $_REQUEST['page'];if(!$page){
 
@@ -553,78 +553,44 @@ $tam = $row3['t'];
 
         	<tr>
 
-      	<td colspan="12" class="child" >
+      	<td colspan="12" class="rounded bg-gray-200 px-2 py-1" >
 
        	<?php
-
-			$sql4 = "SELECT * FROM users WHERE id='".$_SESSION['user_id']."'";
-
-			$rs4 = mysql_query($sql4);
-
-			$row4 = mysql_fetch_array($rs4);
-
-			if($row4['clientId']==0){
-
-		?>
+					$sql4 = "SELECT * FROM users WHERE id='".$_SESSION['user_id']."'";
+					$rs4 = mysql_query($sql4);
+					$row4 = mysql_fetch_array($rs4);
+					if($row4['clientId']==0){
+				?>
 
         <?php
-
-			if($_SESSION['user_id']==54){
-
-				echo $_SESSION['country'].' '.DB_NAME;
-
-			}
-
+					if($_SESSION['user_id']==54){
+						echo $_SESSION['country'].' '.DB_NAME;
+					}
 		?>
 
         <form name="filter" action="" method="post">
-
-        	<table width="100%">
-
+        	<table class="table-auto p-2">
             	<tr>
-
                 	<td colspan="6">
-
                         Attendee: <select name="aid" style="background-color:#FAD090" onkeypress="submit_form(event);">
-
                         <option <?php if($faid==0){echo 'selected="selected"';} if(checkEXT()){echo 'disabled="disabled"';}?> value="0">All</option>
-
                         <?php
-
                             if(checkEXT()){
-
-
-
                                 $user_id = $_SESSION['user_id'];
-
                                 $sql2 = "SELECT attendee_id FROM users WHERE id='$user_id'";
-
                                 $rs2 = mysql_query($sql2);
-
                                 $row2 = mysql_fetch_array($rs2);
-
                                 $faid = $aid = $row2['attendee_id'];
-
                                 $sql = "SELECT * FROM attendee WHERE id != 10 AND active=1 order by s_name ";
-
                                 $rs = mysql_query($sql);
-
                                 while($row=mysql_fetch_array($rs)){
-
                                     if($aid == $row['id']){
-
                                         echo '<option selected="selected" value="'.$row['id'].'">'.$row['s_name'].'</option>';
-
                                     }
-
                                     else{
-
                                         echo '<option disabled="disabled" value="'.$row['id'].'">'.$row['s_name'].'</option>';
-
                                     }
-
                                 }
-
                             }
 
                             else{
@@ -1197,23 +1163,23 @@ $tam = $row3['t'];
 
     <tr>
 
-    	<td colspan="6">
+    	<td colspan="6" class="py-3">
 
-            <input type="submit" name="filter" value="Filter" style=" width:100px"/>&nbsp;
+            <input type="submit" name="filter" value="Filter" class="rs-filter-button"/>&nbsp;
 
-            <input type="submit" name="claims" value="Claims Only" style=" width:100px"/>&nbsp;
+            <input type="submit" name="claims" value="Claims Only" class="rs-filter-button"/>&nbsp;
 
-            <input type="submit" name="servicecalls" value="Service Calls" style=" width:100px"/>&nbsp;
+            <input type="submit" name="servicecalls" value="Service Calls" class="rs-filter-button"/>&nbsp;
 
-            <input type="submit" name="fleetservices" value="Fleet Services" style=" width:100px"/>&nbsp;
+            <input type="submit" name="fleetservices" value="Fleet Services" class="rs-filter-button"/>&nbsp;
 
-            <input type="submit" name="inspections" value="Inspections" style=" width:100px"/>&nbsp;
+            <input type="submit" name="inspections" value="Inspections" class="rs-filter-button"/>&nbsp;
 
-            <input type="submit" name="carparts" value="Car Parts" style=" width:100px"/>&nbsp;
+            <input type="submit" name="carparts" value="Car Parts" class="rs-filter-button"/>&nbsp;
 
-            <input type="submit" name="towing" value="Towing" style=" width:100px"/>&nbsp;
+            <input type="submit" name="towing" value="Towing" class="rs-filter-button"/>&nbsp;
 
-            <input type="submit" name="clear" value="Clear" style=" width:100px"/>
+            <input type="submit" name="clear" value="Clear" class="rs-filter-button"/>
 
        	</td>
 
@@ -1225,33 +1191,33 @@ $tam = $row3['t'];
 
       	</td></tr>
 
-        <tr><td colspan="12">&nbsp;</td></tr>
+        <tr ><td colspan="12">&nbsp;</td></tr>
 
         <tr>
 
-        	<td class="top-left-child" style="background-color:#ECF65C;" width="<?php echo $col1;?>">ID</td>
+        	<td class="rounded-tl-lg p-1" style="background-color:#ECF65C;" width="<?php echo $col1;?>">ID</td>
 
-            <td class="top-center-child" style="background-color:#ECF65C;" width="<?php echo $col2+15;?>">Date</td>
+            <td class="p-1" style="background-color:#ECF65C;" width="<?php echo $col2+15;?>">Date</td>
 
-            <td class="top-center-child" style="background-color:#ECF65C;" width="<?php echo $col2-15;?>">Job</td>
+            <td class="p-1" style="background-color:#ECF65C;" width="<?php echo $col2-15;?>">Job</td>
 
-            <td class="top-center-child" style="background-color:#ECF65C;" width="<?php echo $col3;?>">A Number</td>
+            <td class="p-1" style="background-color:#ECF65C;" width="<?php echo $col3;?>">A Number</td>
 
-            <td class="top-center-child" style="background-color:#ECF65C;" width="<?php echo $col2;?>">Car</td>
+            <td class="p-1" style="background-color:#ECF65C;" width="<?php echo $col2;?>">Car</td>
 
-            <td class="top-center-child" style="background-color:#ECF65C;" width="<?php echo $col4;?>"><?php if( isset($_POST['fleetservices'])) {echo 'KM'; } else { echo 'Cov/Use';}?> </td>
+            <td class="p-1" style="background-color:#ECF65C;" width="<?php echo $col4;?>"><?php if( isset($_POST['fleetservices'])) {echo 'KM'; } else { echo 'Cov/Use';}?> </td>
 
-            <td class="top-center-child" style="background-color:#ECF65C;" width="<?php echo $col2;?>">Location</td>
+            <td class="p-1" style="background-color:#ECF65C;" width="<?php echo $col2;?>">Location</td>
 
-            <td class="top-center-child" style="background-color:#ECF65C;" width="<?php echo $col4;?>">Attendee</td>
+            <td class="p-1" style="background-color:#ECF65C;" width="<?php echo $col4;?>">Attendee</td>
 
-            <td class="top-center-child" style="background-color:#ECF65C;" width="<?php echo $col4;?>"><?php if( isset($_POST['fleetservices'])) { echo 'Cost'; } else {echo 'Charged';} ?></td>
+            <td class="p-1" style="background-color:#ECF65C;" width="<?php echo $col4;?>"><?php if( isset($_POST['fleetservices'])) { echo 'Cost'; } else {echo 'Charged';} ?></td>
 
             <?php
 
 				if( isset($_POST['fleetservices'])) {
 
-					echo '<td class="top-center-child" colspan="2" style="background-color:#ECF65C;" width="'.($col4*2).'">Description</td>';
+					echo '<td class="p-1" colspan="2" style="background-color:#ECF65C;" width="'.($col4*2).'">Description</td>';
 
 				}
 
@@ -1259,47 +1225,17 @@ $tam = $row3['t'];
 
 			?>
 
-            <td class="top-center-child" style="background-color:#ECF65C;" width="<?php echo $col4;?>">Insured</td>
+            <td class="p-1" style="background-color:#ECF65C;" width="<?php echo $col4;?>">Insured</td>
 
-            <td class="top-center-child" style="background-color:#ECF65C;" width="<?php echo $col4;?>">Picture</td>
+            <td class="p-1" style="background-color:#ECF65C;" width="<?php echo $col4;?>">Picture</td>
 
             <?php } ?>
 
-			<td class="top-right-child" style="background-color:#ECF65C;" width="<?php echo $col4;?>">Status</td>
+			<td class="rounded-tr-lg p-1" style="background-color:#ECF65C;" width="<?php echo $col4;?>">Status</td>
 
         </tr>
 
         <?php
-
-			/*if(checkEXT()){
-
-
-
-				$user_id = $_SESSION['user_id'];
-
-				$sql2 = "SELECT attendee_id FROM users WHERE id='$user_id'";
-
-				$rs2 = mysql_query($sql2);
-
-				$row2 = mysql_fetch_array($rs2);
-
-				$aid = $row2['attendee_id'];
-
-				$sql = "SELECT * FROM service_req WHERE `delete` =0 AND `attendee_id` = '$aid' order by STR_TO_DATE( `opendt` , '%m-%d-%Y %k:%i' ) DESC, id DESC";
-
-				$rs = mysql_query($sql);
-
-				$num_rows = mysql_num_rows($rs);
-
-				$end = ($paging * $page)-1;
-
-				$current_pt = ($paging * $page) - $paging;
-
-				$sql = "SELECT * FROM service_req WHERE `delete` =0 AND `attendee_id` = '$aid' order by STR_TO_DATE( `opendt` , '%m-%d-%Y %k:%i' ) DESC, id DESC LIMIT ".$current_pt.", ".$paging;
-
-				$rs = mysql_query($sql);
-
-			}*/
 
 			if(1){
 
@@ -1312,152 +1248,80 @@ $tam = $row3['t'];
 				}
 
 				if($fjob != 0 && !isset($_POST['claims']) && !isset($_POST['servicecalls']) && !isset($_POST['fleetservices']) && !isset($_POST['inspections']) && !isset($_POST['carparts']) && !isset($_POST['towing'])){
-
 					$filter = $filter.' AND job = '.$fjob;
-
 				}
-
 				else if(isset($_POST['claims'])){
-
 					$filter = $filter.' AND (job=20 OR job=29 OR job=7 OR job=18 OR job=23 OR job=28 OR job=8 OR job=31 OR job=34 OR job=15 OR job=56 or job=57 or job=63)';
-
 				}
-
 				else if(isset($_POST['servicecalls'])){
-
 					$filter .= " AND (job=6 OR job=2 OR job=1 OR job=5 OR job=4 OR job=41 OR job=9)";
-
 				}
-
 				else if(isset($_POST['fleetservices'])){
-
 					$filter .= " AND (job=24 OR job=21 OR job=47)";
-
 				}
-
 				else if(isset($_POST['inspections'])){
-
 					$filter .= " AND (job=11 OR job=10 OR job=40 OR job=37)";
-
 				}
-
 				else if(isset($_POST['carparts'])){
-
 					$filter .= " AND (job=27 OR job=44)";
-
 				}
-
 				else if(isset($_POST['towing'])){
-
 					$filter .= " AND (job=29 OR job='12' OR job=33 OR job=32 OR job=20 OR job=36 OR job=16 OR job=22 OR job=13 OR job=39 OR job=3 OR job=14 OR job=17)";
-
-					//$filter .= " AND (job=12)";
-
 				}
-
-
 
 				if($faid != 0){
-
 					$filter = $filter.' AND attendee_id = '.$faid;
-
 				}
 
 				if($sid != 0){
-
 					$filter = $filter.' AND id = '.$sid;
-
 				}
-
-
 
 				if($adj_fee == 2){
-
 					$filter = $filter.' AND `adjfee`=0';
-
 				}
-
 				else if($adj_fee == 1){
-
 					$filter = $filter.' AND `adjfee`!=0';
-
 				}
-
-
 
 				if($nrs_fee == 2){
-
 					$filter = $filter.' AND `accfee`=0';
-
 				}
-
 				else if($nrs_fee == 1){
-
 					$filter = $filter.' AND `accfee`!=0';
-
 				}
-
-
 
 				if($rhd ==1){
-
 					$filter = $filter.' AND `RightHandDrive`= 1';
-
 				}
-
 				else if($rhd==2){
-
 					$filter = $filter.' AND `RightHandDrive`=0';
-
 				}
-
-
 
 				if($claimsFilter !== ''){
-
 					$filter = $filter." AND `claimNo` = '$claimsFilter'";
-
 				}
 
 				if($phone !==''){
-
-
-
 					if(!strstr($phone,'-')){
-
 						$temp = substr($phone,0,3)."-".substr($phone,3);
-
-						//echo $temp;
-
 					}
-
 					else{
-
 						$temp = str_replace("-","",$phone);
-
 					}
-
 					$filter = $filter." AND (`AddPhone` = '$phone' OR `AddPhone`= '$temp')";
-
 				}
 
 				if($claimsAtt!=''){
-
 					$filter = $filter." AND `claimsAttId` = '$claimsAtt'";
-
 				}
 
 				if($persoonsFilter !== ''){
-
-					$sql4 = "SELECT * FROM `drivers_license` WHERE `persoonsNo`='$persoonsFilter'";
-
+					$sql4 = "SELECT * FROM `drivers_license` WHERE `persoonsNo`='$persoonsFilter' ";
 					$rs4 = mysql_query($sql4);
 
-
-
 					if(mysql_num_rows($rs4) != 0){
-
-						$temp = ' AND (';
+						$temp = ' and ( ';
 
 						$temp_f = 1;
 
@@ -1482,31 +1346,17 @@ $tam = $row3['t'];
 						$temp = $temp.')';
 
 					}
-
 					else{
-
-						//nothing found
-
 						$temp = " AND `licenseNo` = '-1'";
-
 					}
-
-					//echo $temp;
-
 					$filter = $filter.$temp;
-
 				}
 
 				if($admFilter !== ''){
-
 					$sql4 = "SELECT * FROM `drivers_license` WHERE `admNo`='$admFilter'";
-
 					$rs4 = mysql_query($sql4);
 
-
-
 					if(mysql_num_rows($rs4) != 0){
-
 						$temp = ' AND (';
 
 						$temp_f = 1;
@@ -1532,193 +1382,95 @@ $tam = $row3['t'];
 						$temp = $temp.')';
 
 					}
-
 					else{
-
-						//nothing found
-
 						$temp = " AND `licenseNo` = '-1'";
-
 					}
-
-					//echo $temp;
 
 					$filter = $filter.$temp;
-
 				}
-
 				if(strcmp($sdate,'')!=0){
-
 					$filter = $filter." AND STR_TO_DATE(`opendt`,'%m-%d-%Y') >= STR_TO_DATE('".$sdate."','%m-%d-%Y') ";
-
 				}
-
 				if(strcmp($edate,'')!=0){
-
 					$filter = $filter." AND STR_TO_DATE(`opendt`,'%m-%d-%Y') <= STR_TO_DATE('".$edate."','%m-%d-%Y')";
-
 				}
-
 				if(strcmp($anumber,'')!=0){
-
 					$filter = $filter." AND a_number = '$anumber'";
-
 				}
-
-
 
 				if(strcmp($licenseNo,'')!=0){
-
 					$filter = $filter." AND (  licenseNo = '$licenseNo' OR licenseNo2='$licenseNo')";
-
 				}
-
-
 
 				if($bill_to!=100){
-
 					$filter = $filter." AND bill_to = '$bill_to'";
-
 				}
-
-
 
 				if($mr != 0){
-
 					if($mr == 1){
-
 						$filter = $filter." AND `money_delivered` != 0 AND `charged` > 0";
-
 					}
-
-					else{ //$mr == -1
-
-						//$filter = $filter." AND `money_delivered` = 0 AND `charged` > 0 AND paymentType != 'Bank Transfer' AND paymentType!= 'Office' AND paymentType!= 'Agreement' AND `po_received`!=1";
-
+					else{
 						$filter = $filter." AND `money_delivered` = 0 AND `charged` > 0 AND paymentType!= 'Agreement' AND `po_received`!=1";
-
 					}
-
 				}
-
 				if(strcmp($clientno,'')!=0){
-
 					$filter = $filter." AND `ClientNo` = '$clientno'";
-
 				}
-
 				if(strcmp($vin,'')!=0){
-
 					$filter = $filter." AND `vin` = '$vin'";
-
 				}
-
-
 
 				if($insured_not != 0){
-
 					if($insured_not == 2){
-
 						$filter = $filter." AND `insured` = 0";
-
 					}
-
 					else{
-
 						$filter = $filter." AND `insured` = 1";
-
 					}
-
 				}
-
-
 
 				if($district!=0){
-
 					$filter = $filter." AND `district` = '$district'";
-
 				}
-
 				if($policyFilter!==''){
-
 					$filter = $filter." AND `pol` = '$policyFilter'";
-
 				}
-
-
 
 				if(isset($_POST[vehicle_model]) && $_POST[vehicle_model]!==''){
-
 					$t = $_POST['vehicle_make'].' '.$_POST['vehicle_model'];
-
 					$filter .= " AND `car` LIKE '$t'";
-
 				}
-
 				else{
-
 					unset($_POST[vehicle_model]);
-
 					unset($_POST[vehicle_make]);
-
 					unset($_POST[vehicle_year]);
-
 				}
-
-
-
-
 
 				$sql4 = "SELECT * FROM users WHERE id='".$_SESSION['user_id']."'";
-
 				$rs4 = mysql_query($sql4);
-
 				$row4 = mysql_fetch_array($rs4);
-
 				if($row4['clientId']!=0){
-
 					$filter = $filter." AND bill_to='".$row4['clientId']."'";
-
 				}
-
-
 
 				if ( $licenseNo!=='' ){
 
-
-
 				}
-
 				else if(!isset($_POST['fleetservices']) && $fjob != 35 && $fjob != 21 && $fjob != 24){
-
 					$filter .= " AND job!=24 AND job!=21 AND job!=35 ";
-
 				}
-
 				else if($fjob != 35 ){
 
-					//$filter .= " AND job!=35 ";
-
 				}
 
-
-
-
-
 				$sql = "SELECT * FROM service_req WHERE `delete` =0 ".$filter." order by STR_TO_DATE( `opendt` , '%m-%d-%Y %k:%i' ) DESC, id DESC";
-
 				$rs = mysql_query($sql);
-
 				$num_rows = mysql_num_rows($rs);
-
 				$end = ($paging * $page)-1;
-
 				$current_pt = ($paging * $page) - $paging;
-
 				$sql = "SELECT * FROM service_req WHERE `delete` =0 ".$filter." order by STR_TO_DATE( `opendt` , '%m-%d-%Y %k:%i' ) DESC, id DESC LIMIT ".$current_pt.", ".$paging;
-
 				$rs = mysql_query($sql);
-
 			}
 
 			$bg = 0;
@@ -2041,17 +1793,13 @@ $tam = $row3['t'];
 
 
 
-						if(file_exists(FOLDER."rrimage/".$row['id']) || file_exists(FOLDER."rrimage/".$row['accident_link']) || file_exists(FOLDER."rrimage/".$row['accident_link2']) || file_exists(FOLDER."rrimage/".$row['accident_link3']) || file_exists(FOLDER."rrdocs/".$row['id']) || file_exists(FOLDER."rrdocs/".$row['accident_link'])){
-
+						//if(file_exists(FOLDER."rrimage/".$row['id']) || file_exists(FOLDER."rrimage/".$row['accident_link']) || file_exists(FOLDER."rrimage/".$row['accident_link2']) || file_exists(FOLDER."rrimage/".$row['accident_link3']) || file_exists(FOLDER."rrdocs/".$row['id']) || file_exists(FOLDER."rrdocs/".$row['accident_link'])){
+					if($s3_ob->getObject("rrimage/".$row['id'].'/') ) {
 							echo '<b>Yes</b>';
-
-						}
-
-						else{
-
-							echo 'No';
-
-						}
+					}
+					else{
+						echo 'No';
+					}
 
 					?>
 

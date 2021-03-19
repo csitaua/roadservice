@@ -18,9 +18,9 @@ $link = mysql_connect(DB_HOST, DB_USER, DB_PASS) or die("Couldn't make connectio
 $db1= mysql_connect(DB_HOST, DB_USER, DB_PASS) or die("Couldn't make connection.");
 $db = mysql_select_db(DB_NAME, $link) or die("Couldn't select database2".$_SESSION['country'].' z');
 $db2 = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-$connectionInfo = array( "Database"=>"insproSQL" , "UID"=>"exportsa", "PWD"=>"nvsql2304@@",'ReturnDatesAsStrings'=>true);
-$connt = mssql_connect( $serverName, "exportsa","nvsql2304@@");
-$conn=mssql_select_db("insproSQL",$connt);
+//$connectionInfo = array( "Database"=> "InsrpoSQL_ARU" , "UID"=>"exportsa", "PWD"=>"nvsql2304@@",'ReturnDatesAsStrings'=>true);
+$connt = mssql_connect( HOST2, USER_NAME2 ,PASSWORD2);
+$conn=mssql_select_db(DB_NAME2,$connt);
 //$inspro=new PDO("sqlsrv:Server=".$serverName.";Database=insproSQL", "exportsa", "nvsql2304@@");
 //$mysqli = new mysqli("localhost", DB_USER, DB_PASS, DB_NAME);
 //if ($mysqli->connect_errno) {
@@ -41,6 +41,7 @@ define ("POWER_LEVEL",4);
 define ("RR_LEVEL",3);
 define ("VIEW_LEVEL",2);
 define ("EXTERNAL_LEVEL", 1);
+
 /*************** reCAPTCHA KEYS****************/
 $publickey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 $privatekey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
@@ -265,6 +266,14 @@ function checkPower(){
 	else{
 		return 0;
 	}
+}
+function isAdmin(){
+  if($_SESSION['user_level'] == ADMIN_LEVEL){
+    return 1;
+  }
+  else{
+    return 0;
+  }
 }
 function getUserFName(){
 	$sql = "SELECT * FROM users WHERE id=".$_SESSION['user_id'];

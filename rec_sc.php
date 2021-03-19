@@ -1,7 +1,7 @@
 <?php
 
-
-
+ini_set('display_errors', '1');
+error_reporting(E_ERROR | E_PARSE);
 include 'dbc.php';
 
 date_default_timezone_set('America/Aruba');
@@ -12,8 +12,10 @@ include "support/function.php";
 include "support/simpleimage.php";
 ini_set('max_execution_time', 240);
 
-//error_reporting(E_ALL);
-//ini_set('display_errors', '1');
+require 'Controllers/S3RSObjectController.php';
+use Controllers\S3RSObject;
+$s3_ob = new S3RSObject();
+
 
 
 $car = mysql_real_escape_string($_REQUEST['car']);
@@ -916,7 +918,7 @@ else if ($attendee!=0){
 
 	$rs = mysql_query($sql);
 
-	if($_SESSION['user_level'] > POWER_LEVEL){
+	if($_SESSION['user_level'] >= POWER_LEVEL){
 
 		if(mysql_num_rows($rs)!=0){
 
@@ -942,286 +944,122 @@ else if ($attendee!=0){
 
 	}
 
-
-
-	//echo mysql_error();
-
-	/*if($acc_link){
-
-		$acc_link2 = mysql_insert_id();
-
-		$sql2 = "UPDATE service_req SET accident_link='$acc_link2' WHERE id='$acc_link'";
-
-		mysql_query($sql2);
-
-	}*/
 	$ext = end(explode('.', $_FILES["image_upload_box"]["name"]));
 	//echo 'extension '.$ext;
 	if(strcmp($ext,'mov')==0 || strcmp($ext,'MOV')==0 || strcmp($ext,'mp4')==0 || strcmp($ext,'MP4')==0){
-
-		mkdir(FOLDER.'rrmov/'.$id);
-		$path = FOLDER."rrmov/".$id.'/';
-
-
-
-		$fn = 1;
 		$file_name = $id.'_'.$fn.'.'.$ext;
-		$path = FOLDER."rrmov/".$id.'/';
-		$name = $_FILES["image_upload_box"]["name"];
+		$sub_key = "rrmov/".$id.'/';
+		$object_keys = $s3_ob->getObjects($sub_key);
 		$length = 10;
-
-		$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyz"), 0, $length);
-
-		$remote_file = $path.$randomString.".".$ext;
-
-		while(file_exists($remote_file )){
-
+		$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+		$key = $sub_key.$randomString.'.'.$ext;
+		while(in_array($key, $object_keys)){
 			$length = 10;
-
-			$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyz"), 0, $length);
-
-			$remote_file = $path.$randomString.".".$ext;
-
+			$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+			$key = $sub_key.$randomString.'.'.$ext;
 		}
-
-		$name=$randomString.".".$ext;
-
-
-
-		move_uploaded_file($_FILES['image_upload_box']['tmp_name'], $remote_file);
-
+		$s3_ob->putS3Object($_FILES["image_upload_box"]["tmp_name"],$key,2000,false,0,false);
 	}
-
 	//audio mp3
 	else if(strcmp($ext,'mp3')==0 || strcmp($ext,'MP3')==0 || strcmp($ext,'m4a')==0 || strcmp($ext,'M4A')==0){
-
-		mkdir(FOLDER.'rraudio/'.$id);
-		$path = FOLDER."rraudio/".$id.'/';
-
-		$fn = 1;
 		$file_name = $id.'_'.$fn.'.'.$ext;
-		//$path = FOLDER."rrmov/".$id.'/';
-		$name = $_FILES["image_upload_box"]["name"];
+		$sub_key = "rraudio/".$id.'/';
+		$object_keys = $s3_ob->getObjects($sub_key);
 		$length = 10;
-
-		$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyz"), 0, $length);
-
-		$remote_file = $path.$randomString.".".$ext;
-
-		while(file_exists($remote_file )){
-
+		$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+		$key = $sub_key.$randomString.'.'.$ext;
+		while(in_array($key, $object_keys)){
 			$length = 10;
-
-			$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyz"), 0, $length);
-
-			$remote_file = $path.$randomString.".".$ext;
-
+			$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+			$key = $sub_key.$randomString.'.'.$ext;
 		}
-
-		$name=$randomString.".".$ext;
-
-
-
-		move_uploaded_file($_FILES['image_upload_box']['tmp_name'], $remote_file);
-
+		$s3_ob->putS3Object($_FILES["image_upload_box"]["tmp_name"],$key,2000,false,0,false);
 	} //end mp3
-
+	// pdf
 	else if(strcmp($ext,'pdf')==0){
-
-		mkdir(FOLDER.'rrdocs/'.$id);
-
-		mkdir(FOLDER.'rrdocsthumbs/'.$id);
-
-		$path = FOLDER."rrdocs/".$id.'/';
-
-		$tu = FOLDER.'rrdocsthumbs'.$id.'/';
-
-
-
-		$fn = 1;
-
 		$file_name = $id.'_'.$fn.'.'.$ext;
-
-		$path = FOLDER."rrdocs/".$id.'/';
-
-		$name = $_FILES["image_upload_box"]["name"];
-
+		$sub_key = "rrdocs/".$id.'/';
+		$object_keys = $s3_ob->getObjects($sub_key);
 		$length = 10;
-
-		$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyz"), 0, $length);
-
-		$remote_file = $path.$randomString.".pdf";
-
-		while(file_exists($remote_file )){
-
+		$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+		$key = $sub_key.$randomString.".pdf";
+		while(in_array($key, $object_keys)){
 			$length = 10;
-
-			$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyz"), 0, $length);
-
-			$remote_file = $path.$randomString.".pdf";
-
+			$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+			$key = $sub_key.$randomString.".pdf";
 		}
+		$tkey = "rrdocsthumbs/".$id.'/'.$randomString.'.jpeg';
+		$s3_ob->putS3Object($_FILES["image_upload_box"]["tmp_name"],$key,2000,false,0,false);
+		$s3_ob->putS3Object($_FILES["image_upload_box"]["tmp_name"],$tkey,300,true,85,true);
 
-		$name=$randomString.".pdf";
-
-
-
-		if(file_exists($remote_file)){
-
-            ?>
-
-            	<script type="text/javascript">
-
-					alert("Filename already exist, please change name and try again.");
-
-					window.location = "edit_sc.php?sc="+<?php echo $id;?>;
-
-				</script>
-
-            <?php
-
+	} //end if pdf
+	// images
+	else if (($_FILES["image_upload_box"]["type"] == "image/jpeg" || $_FILES["image_upload_box"]["type"] == "image/pjpeg" || $_FILES["image_upload_box"]["type"] == "image/gif" || $_FILES["image_upload_box"]["type"] == "image/x-png" || $_FILES["image_upload_box"]["type"] == "image/png") && ($_FILES["image_upload_box"]["size"] < 5000000))
+	{
+		$ext='JPG';
+		$sub_key = "rrimage/".$id.'/';
+		$object_keys = $s3_ob->getObjects($sub_key);
+		$fn = 1;
+		$file_name = $id.'_'.$fn.'.'.$ext;
+		$key = "rrimage/".$id.'/'.$file_name;
+		while( in_array($key, $object_keys) ){
+			$fn++;
+			$file_name = $id.'_'.$fn.'.'.$ext;
+			$key = "rrimage/".$id.'/'.$file_name;
 		}
-
-		else{
-
-			move_uploaded_file($_FILES['image_upload_box']['tmp_name'], $remote_file);
-
-
-			//include $_SERVER["DOCUMENT_ROOT"]."/support/simpleimage.php";
-			$im = new imagick();
-			$im->setResolution(300,300);
-			$im->readImage(FOLDER.'rrdocs/'.$id.'/'.$name.'[0]');
-		//	$im->setImageCompression(imagick::COMPRESSION_JPEG);
-			$im->setImageCompressionQuality(80);
-			$im->resizeImage(400,400,Imagick::FILTER_LANCZOS,1, TRUE);
-			$im = $im->flattenImages();
-			$im->setImageFormat('jpeg');
-			$im->writeImage(FOLDER.'rrdocsthumbs/'.$id.'/'.substr($name,0,-4).'.jpeg');
-			$im->clear();
-			$im->destroy();
-
-		}
-
-	}
-
+		$tkey =  "rrthumbs/".$id.'/'.$file_name;
+		$s3_ob->putS3Object($_FILES["image_upload_box"]["tmp_name"],$key,2000,false,95,true);
+		$s3_ob->putS3Object($_FILES["image_upload_box"]["tmp_name"],$tkey,500,true,85,true);
+	} //end if images
 	else if(strcmp($ext,'zip')==0){
 
 		$temp_z=1;
 		//echo 'here';
 		while(file_exists('temp/'.$temp_z.'.zip')){
-
 			$temp_z++;
-
 		}
 
 		$temp_z_file='temp/'.$temp_z.'.zip';
-
 		move_uploaded_file($_FILES['image_upload_box']['tmp_name'], $temp_z_file);
-
 		$dir = 'temp/';
-
 		$zip = new ZipArchive;
-
 		$res = $zip->open($temp_z_file);
 
-
-
 		$temp_dir = 1;
-
 		while(is_dir($dir.$temp_dir)){
-
 			$temp_dir++;
-
 		}
-
 		mkdir($dir.$temp_dir);
-
 		if ($res === TRUE) {
-
 		  $zip->extractTo($dir.$temp_dir);
-
 		  $zip->close();
-
 		}
-
-
 
 		$objects = scandir($dir.$temp_dir);
-
-
-
 		foreach ($objects as $object) {
-
 		   	if ($object != "." && $object != "..") {
-
-
-
 				$ext = end(explode($dir.$temp_dir."/".$object));
 				$ext2 = end(explode(".",$dir.$temp_dir."/".$object));
 				$fhandle = finfo_open(FILEINFO_MIME);
 				$mime_type = finfo_file($fhandle,$dir.$temp_dir."/".$object);
-
 			 echo $mime_type.'/<br/>';
-
 				if(strcmp($mime_type,'application/pdf; charset=binary')==0){
-
-					mkdir(FOLDER.'rrdocs/'.$id);
-
-					$path = FOLDER."rrdocs/".$id.'/';
-
-
-
-					$fn = 1;
-
 					$file_name = $id.'_'.$fn.'.'.$ext;
-
-					$path = FOLDER."rrdocs/".$id.'/';
-
-					$remote_file = $path.$object;
-
+					$sub_key = "rrdocs/".$id.'/';
+					$object_keys = $s3_ob->getObjects($sub_key);
 					$length = 10;
-
 					$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
-
-					$remote_file = $path.$randomString.".pdf";
-
-					while(file_exists($remote_file )){
-
+					$key = $sub_key.$randomString.".pdf";
+					while(in_array($key, $object_keys)){
 						$length = 10;
-
 						$randomString = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
-
-						$remote_file = $path.$randomString.".pdf";
-
+						$key = $sub_key.$randomString.".pdf";
 					}
-
-					$name=$randomString.".pdf";
-					if(file_exists($remote_file)){
-					}
-
-
-					else{
-
-						copy($dir.$temp_dir."/".$object, $remote_file);
-
-						mkdir(FOLDER.'rrdocsthumbs/'.$id);
-						$im = new imagick();
-						$im->setResolution(300,300);
-						$im->readImage(FOLDER.'rrdocs/'.$id.'/'.$name.'[0]');
-						//$im->setImageCompression(imagick::COMPRESSION_JPEG);
-						$im->setImageCompressionQuality(80);
-						$im->resizeImage(400,400,Imagick::FILTER_LANCZOS,1, TRUE);
-						$im = $im->flattenImages();
-						$im->setImageFormat('jpeg');
-						$im->writeImage(FOLDER.'rrdocsthumbs/'.$id.'/'.substr($name,0,-4).'.jpeg');
-						$im->clear();
-						$im->destroy();
-
-
-					}
-
-				}
-				//audio mp3
+					$tkey = "rrdocsthumbs/".$id.'/'.$randomString.'.jpeg';
+					$s3_ob->putS3Object($dir.$temp_dir."/".$object,$key,2000,false,0,false);
+					$s3_ob->putS3Object($dir.$temp_dir."/".$object,$tkey,300,true,85,true);
+				} //end pdf in zip
+				//audio mp3 in zip
 				else if(strcmp($mime_type,'audio/mpeg; charset=binary')==0 || strcmp($ext2,'m4a')==0 || strcmp($ext2,'M4A')==0 ){
 					mkdir(FOLDER.'rraudio/'.$id);
 					$path = FOLDER."rraudio/".$id.'/';
@@ -1244,181 +1082,32 @@ else if ($attendee!=0){
 				} //end mp3
 
 				else if (strcmp($mime_type,"image/jpeg; charset=binary")==0 || strcmp($mime_type,"image/pjpeg; charset=binary")==0 || strcmp($mime_type,"image/gif; charset=binary")==0 || strcmp($mime_type,"image/x-png; charset=binary")==0 || strcmp($mime_type,"image/png; charset=binary")==0)
-
 				{
-
-					mkdir(FOLDER.'rrimage/'.$id);
-
-					mkdir(FOLDER.'rrthumbs/'.$id);
-
-					mkdir(FOLDER."rrgen/".$id);
-
-
-
-					$ext = end(explode('.', $dir.$temp_dir."/".$object));
-
+					$ext='JPG';
+					$sub_key = "rrimage/".$id.'/';
+					$object_keys = $s3_ob->getObjects($sub_key);
 					$fn = 1;
-
 					$file_name = $id.'_'.$fn.'.'.$ext;
-
-					$path = FOLDER."rrimage/".$id.'/';
-
-					$patht = FOLDER."rrthumbs/".$id.'/'; //thumb
-
-					$pathgen = FOLDER."rrgen/".$id.'/';
-
-					$remote_file = $path.$file_name;
-
-					$remote_file_t = $patht.$file_name; //thumbs
-
-					while(file_exists($remote_file)){
-
+					$key = "rrimage/".$id.'/'.$file_name;
+					while( in_array($key, $object_keys) ){
 						$fn++;
-
 						$file_name = $id.'_'.$fn.'.'.$ext;
-
-						$remote_file = $path.$file_name;
-
-						$remote_file_t = $patht.$file_name; //thumbs
-
+						$key = "rrimage/".$id.'/'.$file_name;
 					}
-
-
-
-					if(substr($object,0,17)==='General Situation'){
-
-
-
-						$pos=substr($object,19,1);
-
-						$t = $pos.'.'.$ext;
-
-						$t = $pathgen.$t;
-
-						$sql = "UPDATE service_req SET `img".$pos."`='$t' WHERE `id`=$id";
-
-						mysql_query($sql);
-
-
-
-						$gen = new SimpleImage();
-
-						$gen->load($dir.$temp_dir."/".$object);
-
-						$gen->resizeToWidth(800);
-
-						$gen->Save($t);
-
-
-
-					}
-
-					$image = new SimpleImage();
-
-					$image->load($dir.$temp_dir."/".$object);
-
-					$image->resizeToWidth(2600);
-
-					$image->Save($remote_file);
-
-					/*$thumb = new SimpleImage();
-
-					$thumb->load($dir.$temp_dir."/".$object);
-
-					$thumb->resizeToWidth(200);
-
-					$thumb->Save($remote_file_t);*/
-
-					$im = new imagick();
-					$im->readimage($dir.$temp_dir."/".$object);
-					$im->thumbnailImage(300,300,true);
-					$im->setImageFormat('jpeg');
-					$im->writeImage($remote_file_t);
-					$im->clear();
-					$im->destroy();
-
-
-
-				}
-
+					$tkey = "rrthumbs/".$id.'/'.$file_name;
+					$gkey = "rrgen/".$id.'/'.$file_name;
+					$s3_ob->putS3Object($dir.$temp_dir."/".$object,$key,2000,false,95,true);
+					$s3_ob->putS3Object($dir.$temp_dir."/".$object,$tkey,500,true,85,true);
+				} //end zip if image
 				unlink($dir.$temp_dir."/".$object);
-
 				unlink($temp_z_file);
-
 		   	}
-
 		}
-
 		reset($objects);
-
 		rmdir($dir.$temp_dir);
-
-
-
-	}
-
+	} //end zip
 	//**********************Image****************************
 
-	else if (($_FILES["image_upload_box"]["type"] == "image/jpeg" || $_FILES["image_upload_box"]["type"] == "image/pjpeg" || $_FILES["image_upload_box"]["type"] == "image/gif" || $_FILES["image_upload_box"]["type"] == "image/x-png" || $_FILES["image_upload_box"]["type"] == "image/png") && ($_FILES["image_upload_box"]["size"] < 5000000))
-
-	{
-
-
-
-		mkdir(FOLDER.'rrimage/'.$id);
-
-		mkdir(FOLDER.'rrthumbs/'.$id);
-
-
-
-		$ext = end(explode('.', $_FILES["image_upload_box"]["name"]));
-
-		$fn = 1;
-
-		$file_name = $id.'_'.$fn.'.'.$ext;
-
-		$path = FOLDER."rrimage/".$id.'/';
-
-		$patht = FOLDER."rrthumbs/".$id.'/'; //thumb
-
-		$remote_file = $path.$file_name;
-
-		$remote_file_t = $patht.$file_name; //thumbs
-
-		while(file_exists($remote_file)){
-
-			$fn++;
-
-			$file_name = $id.'_'.$fn.'.'.$ext;
-
-			$remote_file = $path.$file_name;
-
-			$remote_file_t = $patht.$file_name; //thumbs
-
-		}
-
-
-
-		$image = new SimpleImage();
-		$image->load($_FILES["image_upload_box"]["tmp_name"]);
-		$image->resizeToWidth(2600);
-		$image->Save($remote_file);
-		/*$thumb = new SimpleImage();
-		$thumb->load($_FILES["image_upload_box"]["tmp_name"]);
-		$thumb->resizeToWidth(200);
-		$thumb->Save($remote_file_t);*/
-
-		$im = new imagick();
-		$im->readImage($_FILES["image_upload_box"]["tmp_name"]);
-		$im->thumbnailImage(300,300,true);
-		$im->setImageFormat('jpeg');
-		$im->writeImage($remote_file_t);
-		$im->clear();
-		$im->destroy();
-
-
-
-	}
 
 //echo  '<br/>'.mysql_error().'<br/>'.$sql.'<br/>'.$spare;
 

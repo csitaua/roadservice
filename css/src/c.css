@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.rs-filter-button{
+  @apply w-auto inline-flex items-center px-2 py-1 bg-gray-600 border border-transparent rounded-md font-medium text-xs text-white uppercase tracking-widest hover:bg-gray-500 focus:outline-none transition ease-in-out duration-150;
+}

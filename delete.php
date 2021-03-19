@@ -3,7 +3,9 @@ include 'dbc.php';
 date_default_timezone_set('America/Aruba');
 page_protect();
 
-if(!checkAdmin()) {
+//if(!checkAdmin()) {
+//change requested nagico 40951
+if($_SESSION['user_level'] < POWER_LEVEL){
 header("Location:index.php");
 exit();
 }
