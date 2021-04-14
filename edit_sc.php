@@ -3433,7 +3433,10 @@ $row2 = mssql_fetch_array($rs2);
 
                         <?php }
 
-						if($_SESSION['user_level'] >= POWER_LEVEL){?>
+						if($_SESSION['user_level'] >= POWER_LEVEL){
+								//Delete Function as requested by nagico 20210318
+							?>
+										<input type="submit" name="delete" value="Delete" style="font-size:14px; font-weight:bold; width:85px;"/>
                      &nbsp;
         					<?php }
 
@@ -4211,173 +4214,95 @@ $row2 = mssql_fetch_array($rs2);
 						echo '<td width="25%"><a style="color:#DCB272" href="download.php?file='.$docs.'/'.urlencode($doc).'"><img width="275" src="download.php?file='.$docst.'/'.urlencode(substr($doc,0,-4).'.jpeg').'" /></a>';
 					}
 
-					if($_SESSION['user_level'] == ADMIN_LEVEL && $r!=4){
+					if($_SESSION['user_level'] >= POWER_LEVEL && $r!=4){
 
 					echo '</br>&nbsp;<a style="color:#DCB272" href="delete.php?file='.$docs.'/'.urlencode($doc).'&sc='.$id.'">Delete</a>&nbsp;<select name="e-'.$i.'">
-
 						<option value=""></value>
-
 						<option value="form-'.$docs.'/'.urlencode($doc).'" '.$n_form.'>Form</form>
-
 						<option value="overview-'.$docs.'/'.urlencode($doc).'" '.$n_overview.'>Overview</form>
-
 						<option value="damage1-'.$docs.'/'.urlencode($doc).'" '.$n_damage_1.'>Damage A</form>
-
 						<option value="damage2-'.$docs.'/'.urlencode($doc).'" '.$n_damage_2.'>Damage B</form>
-
 						<option value="damage3-'.$docs.'/'.urlencode($doc).'" '.$n_damage_3.'>Damage C</form>
-
 						<option value="damage4-'.$docs.'/'.urlencode($doc).'" '.$n_damage_4.'>Damage D</form>
-
 						<option value="policy1-'.$docs.'/'.urlencode($doc).'" '.$n_policy_1.'>Policy A</form>
-
 						<option value="license1-'.$docs.'/'.urlencode($doc).'" '.$n_license_1.'>License A</form>
-
 						<option value="vin1-'.$docs.'/'.urlencode($doc).'" '.$n_vin_1.'>Vin A</form>
-
 						<option value="policy2-'.$docs.'/'.urlencode($doc).'" '.$n_policy_2.'>Policy B</form>
-
 						<option value="license2-'.$docs.'/'.urlencode($doc).'" '.$n_license_2.'>License B</form>
-
 						<option value="vin2-'.$docs.'/'.urlencode($doc).'" '.$n_vin_2.'>Vin B</form>
-
 						<option value="policy3-'.$docs.'/'.urlencode($doc).'" '.$n_policy_3.'>Policy C</form>
-
 						<option value="license3-'.$docs.'/'.urlencode($doc).'" '.$n_license_3.'>License C</form>
-
 						<option value="vin3-'.$docs.'/'.urlencode($doc).'" '.$n_vin_3.'>Vin C</form>
-
 						<option value="policy4-'.$docs.'/'.urlencode($doc).'" '.$n_policy_4.'>Policy D</form>
-
 						<option value="license4-'.$docs.'/'.urlencode($doc).'" '.$n_license_4.'>License D</form>
-
 						<option value="vin4-'.$docs.'/'.urlencode($doc).'" '.$n_vin_4.'>Vin D</form>
-
 						<option value="inside1-'.$docs.'/'.urlencode($doc).'" '.$inside_1.'>Inside A</form>
-
 						<option value="inside2-'.$docs.'/'.urlencode($doc).'" '.$inside_2.'>Inside B</form>
-
 						<option value="inside3-'.$docs.'/'.urlencode($doc).'" '.$inside_3.'>Inside C</form>
-
 						</select></td>';
 
 						$i++;
 
 					}
 
-					else if($_SESSION['user_level'] != ADMIN_LEVEL && $r!=4){
+					else if($_SESSION['user_level'] < POWER_LEVEL && $r!=4){
 
 					echo '</br>&nbsp;<select name="e-'.$i.'">
-
 						<option value=""></value>
-
 						<option value="form-'.$docs.'/'.urlencode($doc).'" '.$n_form.'>Form</form>
-
 						<option value="overview-'.$docs.'/'.urlencode($doc).'" '.$n_overview.'>Overview</form>
-
 						<option value="damage1-'.$docs.'/'.urlencode($doc).'" '.$n_damage_1.'>Damage A</form>
-
 						<option value="damage2-'.$docs.'/'.urlencode($doc).'" '.$n_damage_2.'>Damage B</form>
-
 						<option value="damage3-'.$docs.'/'.urlencode($doc).'" '.$n_damage_3.'>Damage C</form>
-
 						<option value="damage4-'.$docs.'/'.urlencode($doc).'" '.$n_damage_4.'>Damage D</form>
-
 						<option value="policy1-'.$docs.'/'.urlencode($doc).'" '.$n_policy_1.'>Policy A</form>
-
 						<option value="license1-'.$docs.'/'.urlencode($doc).'" '.$n_license_1.'>License A</form>
-
 						<option value="vin1-'.$docs.'/'.urlencode($doc).'" '.$n_vin_1.'>Vin A</form>
-
 						<option value="policy2-'.$docs.'/'.urlencode($doc).'" '.$n_policy_2.'>Policy B</form>
-
 						<option value="license2-'.$docs.'/'.urlencode($doc).'" '.$n_license_2.'>License B</form>
-
 						<option value="vin2-'.$docs.'/'.urlencode($doc).'" '.$n_vin_2.'>Vin B</form>
-
 						<option value="policy3-'.$docs.'/'.urlencode($doc).'" '.$n_policy_3.'>Policy C</form>
-
 						<option value="license3-'.$docs.'/'.urlencode($doc).'" '.$n_license_3.'>License C</form>
-
 						<option value="vin3-'.$docs.'/'.urlencode($doc).'" '.$n_vin_3.'>Vin C</form>
-
 						<option value="policy4-'.$docs.'/'.urlencode($doc).'" '.$n_policy_4.'>Policy D</form>
-
 						<option value="license4-'.$docs.'/'.urlencode($doc).'" '.$n_license_4.'>License D</form>
-
 						<option value="vin4-'.$docs.'/'.urlencode($doc).'" '.$n_vin_4.'>Vin D</form>
-
 						<option value="inside1-'.$docs.'/'.urlencode($doc).'" '.$inside_1.'>Inside A</form>
-
 						<option value="inside2-'.$docs.'/'.urlencode($doc).'" '.$inside_2.'>Inside B</form>
-
 						<option value="inside3-'.$docs.'/'.urlencode($doc).'" '.$inside_3.'>Inside C</form>
-
 						</select></td>';
 
 						$i++;
 
 					}
 
-
-
-
 					else{
-
 						echo '</br>&nbsp;<a style="color:#DCB272" href="delete.php?file='.$docs.'/'.urlencode($doc).'&sc='.$id.'">Delete</a>&nbsp;<select name="e-'.$i.'">
-
 						<option value=""></value>
-
 						<option value="form-'.$docs.'/'.urlencode($doc).'" '.$n_form.'>Form</form>
-
 						<option value="overview-'.$docs.'/'.urlencode($doc).'" '.$n_overview.'>Overview</form>
-
 						<option value="damage1-'.$docs.'/'.urlencode($doc).'" '.$n_damage_1.'>Damage A</form>
-
 						<option value="damage2-'.$docs.'/'.urlencode($doc).'" '.$n_damage_2.'>Damage B</form>
-
 						<option value="damage3-'.$docs.'/'.urlencode($doc).'" '.$n_damage_3.'>Damage C</form>
-
 						<option value="damage4-'.$docs.'/'.urlencode($doc).'" '.$n_damage_4.'>Damage D</form>
-
 						<option value="policy1-'.$docs.'/'.urlencode($doc).'" '.$n_policy_1.'>Policy A</form>
-
 						<option value="license1-'.$docs.'/'.urlencode($doc).'" '.$n_license_1.'>License A</form>
-
 						<option value="vin1-'.$docs.'/'.urlencode($doc).'" '.$n_vin_1.'>Vin A</form>
-
 						<option value="policy2-'.$docs.'/'.urlencode($doc).'" '.$n_policy_2.'>Policy B</form>
-
 						<option value="license2-'.$docs.'/'.urlencode($doc).'" '.$n_license_2.'>License B</form>
-
 						<option value="vin2-'.$docs.'/'.urlencode($doc).'" '.$n_vin_2.'>Vin B</form>
-
 						<option value="policy3-'.$docs.'/'.urlencode($doc).'" '.$n_policy_3.'>Policy C</form>
-
 						<option value="license3-'.$docs.'/'.urlencode($doc).'" '.$n_license_3.'>License C</form>
-
 						<option value="vin3-'.$docs.'/'.urlencode($doc).'" '.$n_vin_3.'>Vin C</form>
-
 						<option value="policy4-'.$docs.'/'.urlencode($doc).'" '.$n_policy_4.'>Policy D</form>
-
 						<option value="license4-'.$docs.'/'.urlencode($doc).'" '.$n_license_4.'>License D</form>
-
 						<option value="vin4-'.$docs.'/'.urlencode($doc).'" '.$n_vin_4.'>Vin D</form>
-
 						<option value="inside1-'.$docs.'/'.urlencode($doc).'" '.$inside_1.'>Inside A</form>
-
 						<option value="inside2-'.$docs.'/'.urlencode($doc).'" '.$inside_2.'>Inside B</form>
-
 						<option value="inside3-'.$docs.'/'.urlencode($doc).'" '.$inside_3.'>Inside C</form>
-
 						</select></td></tr>';
-
 						$i++;
-
 					}
-
-
-
 					$r++;
 
 				}
@@ -5071,23 +4996,11 @@ $row2 = mssql_fetch_array($rs2);
 					}
 
 					if($_SESSION['user_level'] > RR_LEVEL && $r!=4){
-
 					echo '&nbsp;<a style="color:#DCB272" href="delete.php?file='.$docs.'/'.urlencode($doc).'&sc='.$id.'">Delete</a></td>';
-
 					}
 					else 	if($_SESSION['user_level'] > RR_LEVEL){
-
-						//echo '&nbsp;<a style="color:#DCB272" href="delete.php?file='.$docs.'/'.urlencode($doc).'&sc='.$id.'">Delete</a></td>';
 						echo '&nbsp;<a style="color:#DCB272" href="delete.php?file='.$docs.'/'.urlencode($doc).'&sc='.$id.'">Delete</a></td></tr>';
 					}
-					/*else{
-
-						echo '&nbsp;<a style="color:#DCB272" href="delete.php?file='.$docs.'/'.urlencode($doc).'&sc='.$id.'">Delete</a></td></tr>';
-
-					}*/
-
-
-
 					$r++;
 
 				}

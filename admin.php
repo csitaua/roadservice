@@ -147,7 +147,10 @@ list($active) = mysql_fetch_row($rs_active);
 		if (checkAdmin()) {
 		/*******************************END**************************/
 		?>
-      <a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin.php">Admin CP </a>
+      <a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin.php">Admin CP </a><br>
+			  <a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_adjusters.php">Admin Adjuster CP </a><br>
+				<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_attendees.php">Admin Attendee CP </a><br>
+				<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_rentalclaims.php">Admin Rental/Claim Person CP </a>
 		<?php } ?>
 	</div>
 	</td>
@@ -238,7 +241,7 @@ list($active) = mysql_fetch_row($rs_active);
 		</p>
 		<form name "searchform" action="admin.php" method="post">
         <table width="100%" border="0" align="center" cellpadding="2" cellspacing="0">
-          <tr bgcolor="#666666">
+          <tr class="bg-gray-400">
             <td width="4%"><strong>&nbsp;</strong></td>
             <td width="8%"><strong>Date</strong></td>
             <td width="10%"><div align="center"><strong>User Name</strong></div></td>
@@ -291,8 +294,8 @@ list($active) = mysql_fetch_row($rs_active);
             Level: <input id="user_level<?php echo $rrows['id']; ?>" name="user_level<?php echo $rrows['id']; ?>" type="text" size="5" value="<?php echo $rrows['user_level']; ?>" > 1->External,2->View Only,3->Road Service,5->Admin
 			<br><br>New Password: <input id="pass<?php echo $rrows['id']; ?>" name="pass<?php echo $rrows['id']; ?>" type="text" size="20" value="" > (leave blank)
 			<input name="doSave" type="button" id="doSave" value="Save"
-			onclick='$.get("do.php",{ cmd: "edit", pass:$("input#pass<?php echo $rrows['id']; ?>").val(),user_level:$("input#user_level<?php echo $rrows['id']; ?>").val(),user_email:$("input#user_email<?php echo $rrows['id']; ?>").val(),user_name: $("input#user_name<?php echo $rrows['id']; ?>").val(),full_name: $("input#full_name<?php echo $rrows['id']; ?>").val(),ccountry: $("input#ccountry<?php echo $rrows['id']; ?>").val(),agent: $("input#agent<?php echo $rrows['id']; ?>").val(),id: $("input#id<?php echo $rrows['id']; ?>").val() } ,function(data){ $("#msg<?php echo $rrows['id']; ?>").html(data); });'>
-			<a  onclick='$("#edit<?php echo $rrows['id'];?>").hide();' href="javascript:void(0);">close</a>
+			onclick='$.get("do.php",{ cmd: "edit", pass:$("input#pass<?php echo $rrows['id']; ?>").val(),user_level:$("input#user_level<?php echo $rrows['id']; ?>").val(),user_email:$("input#user_email<?php echo $rrows['id']; ?>").val(),user_name: $("input#user_name<?php echo $rrows['id']; ?>").val(),full_name: $("input#full_name<?php echo $rrows['id']; ?>").val(),ccountry: $("input#ccountry<?php echo $rrows['id']; ?>").val(),agent: $("input#agent<?php echo $rrows['id']; ?>").val(),id: $("input#id<?php echo $rrows['id']; ?>").val() } ,function(data){ $("#msg<?php echo $rrows['id']; ?>").html(data); });' class="inline-flex items-center px-2 py-1 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
+			<a  onclick='$("#edit<?php echo $rrows['id'];?>").hide();' href="javascript:void(0);" class="inline-flex items-center px-2 py-1 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">close</a>
 
 		  <div style="color:red" id="msg<?php echo $rrows['id']; ?>" name="msg<?php echo $rrows['id']; ?>"></div>
 		  </div>
