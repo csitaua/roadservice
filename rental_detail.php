@@ -46,13 +46,13 @@ if(isset($_POST['submit'])){
 
 	$money_delivered = 0;
 
-	$paymentType = '';	
+	$paymentType = '';
 
 	if (isset($_POST['money'])){
 
 		$money_delivered = $_SESSION['user_id'];
 
-		$paymentType = $_POST['paymentType'];	
+		$paymentType = $_POST['paymentType'];
 
 	}
 
@@ -168,9 +168,9 @@ if(isset($_POST['submit'])){
 
 	$data = $data.(trim($paymentType)!== '' ? ", paymentType='".$paymentType."'" : "");
 
-	
 
-	
+
+
 
 	$sql = "UPDATE `rental` SET `requested_by`='".mysql_real_escape_string($_POST['requestedBy'])."', `rental_company_id`='".$_POST['company']."' ".$data.", bill_to ='".mysql_real_escape_string($_POST['bill_to'])."', money_delivered='$money_delivered', attendee='".$_POST['attendee']."'  WHERE `id`='$idm'";
 
@@ -178,7 +178,7 @@ if(isset($_POST['submit'])){
 
 	//echo mysql_error().'<br/>'.$sql;
 
-	
+
 
 	if(strcmp($_POST['status'],'Closed')==0 || strcmp($_POST['status'],'Pending Payment')==0){
 
@@ -196,7 +196,7 @@ if(isset($_POST['submit'])){
 
 	}
 
-	
+
 
 	$sql = "SELECT * FROM `rental` WHERE `id`='$idm'";
 
@@ -212,7 +212,7 @@ if(isset($_POST['submit'])){
 
 		mysql_query($sql);
 
-		
+
 
 		$sql = "SELECT * FROM rental_vehicle WHERE `id`='".$_POST['vehicle']."'";
 
@@ -222,13 +222,13 @@ if(isset($_POST['submit'])){
 
 		$rate = $row['rental'];
 
-		
+
 
 		$sql = "UPDATE `rental` SET `rental_vehicle_id`='".$_POST['vehicle']."', `rate`='$rate' WHERE `id`='$idm'";
 
 		mysql_query($sql);
 
-		
+
 
 		$sql = "UPDATE `rental_vehicle` SET `currentRentalId`='$idm' WHERE `id` = '".$_POST['vehicle']."'";
 
@@ -236,7 +236,7 @@ if(isset($_POST['submit'])){
 
 	}
 
-	
+
 
 	//save file only pdf
 
@@ -250,19 +250,19 @@ if(isset($_POST['submit'])){
 
 		$path = FOLDER.'/rental/inspection/'.$id;
 
-		
+
 
 		$remote_file = $path.'/inspection-'.$id.'.'.$ext;
 
 
 
-		
+
 
 		move_uploaded_file($_FILES['image_upload_box']['tmp_name'], $remote_file);
 
 	}
 
-	
+
 
 }
 
@@ -336,7 +336,7 @@ if(is_numeric($requestedBy)){
 
 	$requestedBy = $row2['name'];
 
-		
+
 
 }
 
@@ -344,7 +344,7 @@ if(is_numeric($requestedBy)){
 
 if($odo_in==0){
 
-	$odo_in='';	
+	$odo_in='';
 
 }
 
@@ -392,13 +392,13 @@ echo menu();
 
             <select name="company" style="background-color:#FAD090">
 
-            
+
 
             	<?php
 
 					if($rental_company_id==0){
 
-						echo '<option value="" selected="selected"></option>';	
+						echo '<option value="" selected="selected"></option>';
 
 					}
 
@@ -412,7 +412,7 @@ echo menu();
 
                         	<option <?php if($row2['id']==$rental_company_id){echo 'selected="selected"';}?> value="<?php echo $row2['id'];?>"><?php echo $row2['name'];?></option>
 
-                        <?php	
+                        <?php
 
 					}
 
@@ -446,7 +446,7 @@ echo menu();
 
                         	<option <?php if($row2['id']==$vehicle){echo 'selected="selected"';}?> value="<?php echo $row2['id'];?>"><?php echo $row2['make'].' '.$row2['model'].' ('.$row2['licenseplate'].')';?></option>
 
-                        <?php	
+                        <?php
 
 					}
 
@@ -472,7 +472,7 @@ echo menu();
 
 					if($requestedByid == 0){
 
-						echo '<option selected="selected" value="'.$requestedBy.'">'.$requestedBy.'</option>';	
+						echo '<option selected="selected" value="'.$requestedBy.'">'.$requestedBy.'</option>';
 
 					}
 
@@ -484,13 +484,13 @@ echo menu();
 
 						if($row2['id']==$requestedByid){
 
-							echo '<option selected="selected" value="'.$row2['id'].'">'.$row2['name'].'</option>';	
+							echo '<option selected="selected" value="'.$row2['id'].'">'.$row2['name'].'</option>';
 
 						}
 
 						else{
 
-							echo '<option value="'.$row2['id'].'">'.$row2['name'].'</option>';	
+							echo '<option value="'.$row2['id'].'">'.$row2['name'].'</option>';
 
 						}
 
@@ -524,13 +524,13 @@ echo menu();
 
 						if($row2['id']==$attendee){
 
-							echo '<option selected="selected" value="'.$row2['id'].'">'.$row2['name'].'</option>';	
+							echo '<option selected="selected" value="'.$row2['id'].'">'.$row2['name'].'</option>';
 
 						}
 
 						else{
 
-							echo '<option value="'.$row2['id'].'">'.$row2['name'].'</option>';	
+							echo '<option value="'.$row2['id'].'">'.$row2['name'].'</option>';
 
 						}
 
@@ -688,19 +688,19 @@ echo menu();
 
 							echo '<option selected="selected" value="0">Pending</option>';
 
-							$i=1;	
+							$i=1;
 
 						}
 
 						if($row2['id']==$attendee_in){
 
-							echo '<option selected="selected" value="'.$row2['id'].'">'.$row2['name'].'</option>';	
+							echo '<option selected="selected" value="'.$row2['id'].'">'.$row2['name'].'</option>';
 
 						}
 
 						else{
 
-							echo '<option value="'.$row2['id'].'">'.$row2['name'].'</option>';	
+							echo '<option value="'.$row2['id'].'">'.$row2['name'].'</option>';
 
 						}
 
@@ -736,7 +736,7 @@ echo menu();
 
             <td class="top-right-child" width="<?php echo $col2;?>"><input type="text" name="pol" size="25" value="<?php echo $policy;?>" readonly/>&nbsp;
 
-            	
+
 
         	</td>
 
@@ -750,13 +750,13 @@ echo menu();
 
             <td class="middle-left-child" width="<?php echo $col1;?>">License Plate:</td>
 
-            <td class="middle-right-child" width="<?php echo $col2;?>"><input type="text" name="licensePlate" size="25" value="<?php 
+            <td class="middle-right-child" width="<?php echo $col2;?>"><input type="text" name="licensePlate" size="25" value="<?php
 
 			$rs2 = mysql_query("SELECT * FROM service_req WHERE id = '$service_req_id'");
 
 			$row2= mysql_fetch_array($rs2); echo $row2['a_number'];  ?>" readonly/>&nbsp;
 
-            	
+
 
         	</td>
 
@@ -892,11 +892,11 @@ echo menu();
 
              <td class="bottom-left-child" width="<?php echo $col1;?>">Entered By</td>
 
-            <td class="bottom-right-child" width="<?php echo $col2;?>"><?php 
+            <td class="bottom-right-child" width="<?php echo $col2;?>"><?php
 
 				if($enter_by_id!=0){
 
-					echo getUserFNameID($enter_by_id);	
+					echo getUserFNameID($enter_by_id);
 
 				}
 
@@ -932,7 +932,7 @@ echo menu();
 
             </span>
 
-            
+
 
             </td>
 
@@ -958,7 +958,7 @@ echo menu();
 
             </span>
 
-            
+
 
             </td>
 
@@ -1012,7 +1012,7 @@ echo menu();
 
          	<td class="middle-right-child" colspan="3">
 
-				<span>	
+				<span>
 
             	<div class="buttonwrapper">
 
@@ -1026,11 +1026,11 @@ echo menu();
 
 			</tr>
 
-					';	
+					';
 
 				}
 
-				
+
 
 			?>
 
@@ -1082,19 +1082,19 @@ echo menu();
 
 				else{
 
-					echo '&nbsp;';	
+					echo '&nbsp;';
 
 				}
 
 			?>
 
-        	
+
 
           	</td>
 
         </tr>
 
-        <tr> 
+        <tr>
 
         	<td class="bottom-child" colspan="4" align="right">&nbsp;</td>
 
@@ -1114,7 +1114,7 @@ echo menu();
 
                 	<tr>
 
-                    	<td class="top-child_h" align="center" style="color:#148540" colspan="5"><h3>Vehicle Status</h3></td> 
+                    	<td class="top-child_h" align="center" style="color:#148540" colspan="5"><h3>Vehicle Status</h3></td>
 
                     </tr>
 
@@ -1236,7 +1236,7 @@ echo menu();
 
                 	<tr>
 
-                    	<td class="top-child_h" align="center" style="color:#148540" colspan="2"><h3>Adm / Payment Info</h3></td> 
+                    	<td class="top-child_h" align="center" style="color:#148540" colspan="2"><h3>Adm / Payment Info</h3></td>
 
                     </tr>
 
@@ -1272,17 +1272,17 @@ echo menu();
 
                             if($interval->h==0){
 
-								if($interval->days < 15 || $row['bill_to']==2){
+							//	if($interval->days < 15 || $row['bill_to']==2){
 
 					echo $interval->days.' X '.number_format($rate,2).' = '.number_format($rate*$interval->days,2).' - '.number_format(($rate*$row['discount']/100)*($interval->days),2).' (Discount)';
 
-								}
+				//				}
 
-								else{
+				//				else{
 
-									echo $interval->days.' X '.number_format($rate,2).' = '.number_format($rate*$interval->days,2).' - '.number_format(($rate-45)*($interval->days-14),2).' (Discount)';
+				//					echo $interval->days.' X '.number_format($rate,2).' = '.number_format($rate*$interval->days,2).' - '.number_format(($rate-45)*($interval->days-14),2).' (Discount)';
 
-								}
+				//				}
 
 				}
 
@@ -1352,19 +1352,19 @@ echo menu();
 
 								<input type="hidden" name="money" value="<?php echo $row['money_delivered'];?>"/>
 
-							<input size="5" type="text" style="background-color:#FAD090" readonly name="moneyd" value="<?php 
+							<input size="5" type="text" style="background-color:#FAD090" readonly name="moneyd" value="<?php
 
 								if($row['money_delivered']>0){
 
 									if($row['paymentType']){
 
-										echo $row['paymentType'];	
+										echo $row['paymentType'];
 
 									}
 
 									else{
 
-										echo 'Yes';	
+										echo 'Yes';
 
 									}
 
@@ -1372,11 +1372,11 @@ echo menu();
 
 								else if ($row['charged'] != 0){
 
-									echo 'No';	
+									echo 'No';
 
 								}
 
-							?>"/> 
+							?>"/>
 
 							<?php
 
@@ -1414,7 +1414,7 @@ echo menu();
 
                	</table>
 
-                
+
 
             </td>
 
@@ -1426,7 +1426,7 @@ echo menu();
 
                 	<tr>
 
-                    	<td class="top-child_h" align="center" style="color:#148540" colspan="5"><h3>Drivers License Information</h3></td> 
+                    	<td class="top-child_h" align="center" style="color:#148540" colspan="5"><h3>Drivers License Information</h3></td>
 
                     	<tr><td class="middle-child" colspan="5">&nbsp;</td></tr>
 
@@ -1458,7 +1458,7 @@ echo menu();
 
                             <td class="middle-right-child" colspan="4">
 
-                                <input type="text" name="fname" id="fname" maxlength="50" size="35" <?php 
+                                <input type="text" name="fname" id="fname" maxlength="50" size="35" <?php
 
                                 echo 'value="'.$row3['firstName'].'"'; ?> readonly />
 
@@ -1570,7 +1570,7 @@ echo menu();
 
                                 <input type="text" id="exp_date" name="exp_date" readonly <?php  echo 'value="'.$row3['expireDate'].'"';?>/>
 
-                         
+
 
                             </td>
 
@@ -1584,7 +1584,7 @@ echo menu();
 
                                 <?php
 
-                                    
+
 
                                     $sql4 = "SELECT * FROM drivers_license where id = '$id'";
 
@@ -1632,13 +1632,13 @@ echo menu();
 
 <script  type="text/javascript">
 
-	
+
 
 	function showUpload(){
 
 		if( document.getElementById('extra_drv').value.length != 0){
 
-			document.getElementById('upload_drv').style.display = 'inline';	
+			document.getElementById('upload_drv').style.display = 'inline';
 
 		}
 
@@ -1650,23 +1650,23 @@ echo menu();
 
 	}
 
-	
+
 
 	function uploadLicense(){
 
 		licensenumber = document.getElementById('extra_drv').value;
 
-		window.open('ins_drivers_license.php?license='+licensenumber);	
+		window.open('ins_drivers_license.php?license='+licensenumber);
 
 	}
 
-	
+
 
 	function paymentTypeDisplay(){
 
 		if( document.getElementById('money').checked){
 
-			document.getElementById('paymentType').style.display = 'inline';	
+			document.getElementById('paymentType').style.display = 'inline';
 
 		}
 

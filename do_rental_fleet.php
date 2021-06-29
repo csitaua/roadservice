@@ -14,7 +14,7 @@ foreach($_GET as $key => $value) {
 
 if($get['cmd'] == 'ban')
 {
-mysql_query("update rental_request set active=0 where id='$get[id]'");
+mysql_query("update rental_vehicle set active=0 where id='$get[id]'");
 
 //header("Location: $ret");
 echo "yes";
@@ -28,11 +28,13 @@ if($get['cmd'] == 'edit')
 
 /* Now update user data*/
 mysql_query("
-update rental_request set
-`name`='$get[name]',
-`isclaimsHandler`='$get[isclaimsHandler]',
-`active`='$get[active]',
-`isSurveyRequestor`='$get[isSurveyRequestor]'
+update rental_vehicle set
+`licenseplate`='$get[licenseplate]',
+`make`='$get[make]',
+`model`='$get[model]',
+`year`='$get[year]',
+`rental`='$get[rental]',
+`active`='$get[active]'
 where `id`='$get[id]'") or die(mysql_error());
 //header("Location: $ret");
 
@@ -42,7 +44,7 @@ exit();
 
 if($get['cmd'] == 'unban')
 {
-mysql_query("update rental_request set active=1 where id='$get[id]'");
+mysql_query("update rental_vehicle set active=1 where id='$get[id]'");
 echo "no";
 
 //header("Location: $ret");

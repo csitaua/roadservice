@@ -58,7 +58,7 @@ include "support/function.php";
 	$rs3 = mysql_query($sql3);
 	$row3 = mysql_fetch_array($rs3);
 
-	$sql5="SELECT * FROM `claimshandler` WHERE `id`=".$row['requested_by_id'];
+	$sql5="SELECT * FROM `rental_request` WHERE `id`=".$row['requested_by_id'];
 	$rs5=mysql_query($sql5);
 	$row5=mysql_fetch_array($rs5);
 

@@ -1,12 +1,12 @@
 <?php
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
 
 include 'dbc.php';
 date_default_timezone_set('America/Aruba');
 page_protect();
 include "support/connect.php";
 include "support/function.php";
-//error_reporting(E_ALL);
-//ini_set('display_errors', '1');
 if($_SESSION['user_level'] < RR_LEVEL){
 	header("Location: index.php");
 	exit();
@@ -342,7 +342,7 @@ if($_POST['submit']==='Submit'){
            	<td class="middle-none-child" width="<?php echo $col2;?>"><select name="request" id="request" style="background-color:#FAD090">
             	<option value="0"></option>
             	<?php
-					$sql5="SELECT * FROM `claimshandler` WHERE `active`=1";
+					$sql5="SELECT * FROM `rental_request` WHERE `isSurveyRequestor`=1";
 					$rs5=mysql_query($sql5);
 					while($row5=mysql_fetch_array($rs5)){
 						echo '<option value="'.$row5['id'].'">'.$row5['name'].'</option>';

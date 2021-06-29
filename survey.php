@@ -1257,10 +1257,10 @@ $row13 = mssql_fetch_array($rs13);
            	<input type="text" readonly size="20" value="<?php  echo $row14['airbag_status'];?>" />
             </td>
         </tr>
-       		<td class="middle-left-child" width="<?php echo $col1;?>">Claims Handler:</td>
+       		<td class="middle-left-child" width="<?php echo $col1;?>">Request:</td>
             <td class="middle-right-child" width="<?php echo $col2;?>"><?php
             	$uid = $row1['requested_by_id'];
-				$sql2 = "SELECT * FROM `claimshandler` WHERE id='$uid'";
+				$sql2 = "SELECT * FROM `rental_request` WHERE id='$uid'";
 				$rs2 = mysql_query($sql2);
 				$row2 = mysql_fetch_array($rs2);
 				echo $row2['name'];

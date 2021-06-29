@@ -105,9 +105,10 @@ $row2 = mssql_fetch_array($rs2);
 
         <tr><td colspan="5" align="right" style="color:#fff">Total Insured Vehicles: <?php echo $row2['t'];?></td></tr>
 
-        <?php if($row['master_sc']!=0){
-
-		?>
+        <?php
+				$master_sc = $row['master_sc'];
+				if($row['master_sc']!=0){
+				?>
 
         <tr>
 
@@ -3751,9 +3752,9 @@ $row2 = mssql_fetch_array($rs2);
 
                                 <td width="<?php echo $col2-15;?>"><?php
 
-                                    $jid = $row['job'];
+                                    $jid2 = $row['job'];
 
-                                    $sql2 = "SELECT * FROM jobs where id = '$jid'";
+                                    $sql2 = "SELECT * FROM jobs where id = '$jid2'";
 
                                     $rs2 = mysql_query($sql2);
 
@@ -4888,9 +4889,7 @@ $row2 = mssql_fetch_array($rs2);
 
 
 			if($r!=1){
-
 				while($r!= 5){
-
 					if($r==4){
 						echo '<td width="25%">&nbsp;</td>';
 					}
@@ -4903,36 +4902,22 @@ $row2 = mssql_fetch_array($rs2);
 			}
 
 		?>
-
-
-
-
-
-
-
-
-
         	<tr><td colspan="4">&nbsp;</td></tr>
-
-
-
         	<tr><td colspan="4"><?php
-
-
-
 			if (is_dir(FOLDER.'rrimage/'.$id) && $_SESSION['user_level'] >= RR_LEVEL) {
-
 				echo '<a style="color:#DCB272" href="zip_download.php?dir=rrimage/'.$id.'">Download All Image(s)</a>';
-
 			}
 
 			?></td></tr>
-
-            </table>
-
+      </table>
 
 
-       	<?php if($master_sc && $jid != 3 && $jid != 29 && $jid != 12 && $jid != 33){ ?>
+
+       	<?php
+					//echo $jid.' j';
+				if ($master_sc && $jid != 3 && $jid != 29 && $jid != 12 && $jid != 33) {
+
+				?>
 
         <tr><td colspan="5">&nbsp;</td></tr>
 
@@ -4942,33 +4927,23 @@ $row2 = mssql_fetch_array($rs2);
 
         <?php
 
-
-
 			$id = $master_sc;
-
 			$dirname = FOLDER."rrimage/".$id;
-
 			$thumbs = FOLDER."rrthumbs/".$id;
-
 			$docs = FOLDER."rrdocs/".$id;
-
 			$documents = scandir($docs);
-
 			$images = scandir($dirname);
-
 			$ignore = Array(".", "..");
 
 			$n = 1;
 
 			$r = 1;
-
 			foreach($documents as $doc){
-
 				if(!in_array($doc,$ignore)){
 
 					if($n == 1){
 
-						echo ' <tr><td colspan="4" style="color:#148540">Document(s)</td></tr>';
+						echo ' <tr><td colspan="4" style="color:#148540">Document(s) from Main</td></tr>';
 
 						$n = 0;
 

@@ -102,7 +102,8 @@ list($active) = mysql_fetch_row($rs_active);
       <a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin.php">Admin CP </a><br>
 			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_adjusters.php">Admin Adjuster CP </a><br>
 			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_attendees.php">Admin Attendee CP </a><br>
-			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_rentalclaims.php">Admin Rental/Claim Person CP </a>
+			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_rentalclaims.php">Admin Rental/Claim Person CP </a><br>
+			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_rental_fleet.php">Admin Rental Fleet CP </a>
 		<?php } ?>
 	</div>
 	</td>
@@ -173,7 +174,7 @@ list($active) = mysql_fetch_row($rs_active);
             <th class="w-1/12 text-left"><strong>&nbsp;</strong></th>
             <th class="w-2/12 text-left"><strong>Name</strong></th>
             <th class="w-1/12 text-left"><strong>Claims Handler</strong></div></th>
-            <th class="w-1/12 text-left"><strong>&nbsp;</strong></th>
+            <th class="w-1/12 text-left"><strong>Survey Requestor</strong></th>
             <th class="w-1/12 text-left"><strong>Active</strong></th>
 						<th class="w-6/12 text-left"><strong>&nbsp;</strong></th>
           </tr>
@@ -190,7 +191,7 @@ list($active) = mysql_fetch_row($rs_active);
             <td><input name="u[]" type="checkbox" value="<?php echo $rrows['id']; ?>" id="u[]"></td>
             <td><?php echo $rrows['name']; ?></td>
             <td><?php if ($rrows['isclaimsHandler']) { echo 'Yes';} else { echo 'No';} ?></td>
-            <td>&nbsp;</td>
+            <td><?php if ($rrows['isSurveyRequestor']) { echo 'Yes';} else { echo 'No';} ?></td>
             <td><?php if ($rrows['active']) { echo 'Yes';} else { echo 'No';} ?></td>
 						<td>
 							<a href="javascript:void(0);" onclick='$("#edit<?php echo $rrows['id'];?>").show("slow");' class="inline-flex items-center px-0.5 py-1 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">Edit</a>
@@ -224,13 +225,18 @@ list($active) = mysql_fetch_row($rs_active);
 							<option value="0" <?php if ($rrows['active']==0) { echo 'selected="selected"'; }?>>No</option>
 						</select>
 					</td>
-        	<td>&nbsp;</td>
-					<td>&nbsp;</td>
+        	<td>Survey Request:</td>
+					<td>
+						<select class="border p-1 text-grey-darkest rounded-md shadow-sm" name="isSurveyRequestor<?php echo $rrows['id']; ?>" id="isSurveyRequestor<?php echo $rrows['id']; ?>"  >
+							<option value="1" <?php if ($rrows['isSurveyRequestor']==1) { echo 'selected="selected"'; }?>>Yes</option>
+							<option value="0" <?php if ($rrows['isSurveyRequestor']==0) { echo 'selected="selected"'; }?>>No</option>
+						</select>
+					</td>
 				</tr>
 			</table>
 				<br><br>
 				<input name="doSave" type="button" id="doSave" value="Save"
-			onclick='$.get("do_rentalclaims.php",{ cmd: "edit", name:$("input#name<?php echo $rrows['id']; ?>").val(),isclaimsHandler:$("select#isclaimsHandler<?php echo $rrows['id']; ?>").val(),active:$("select#active<?php echo $rrows['id']; ?>").val(),id: $("input#id<?php echo $rrows['id']; ?>").val()} ,function(data){ $("#msg<?php echo $rrows['id']; ?>").html(data); });' class="inline-flex items-center px-2 py-1 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
+			onclick='$.get("do_rentalclaims.php",{ cmd: "edit", name:$("input#name<?php echo $rrows['id']; ?>").val(),isclaimsHandler:$("select#isclaimsHandler<?php echo $rrows['id']; ?>").val(),isSurveyRequestor:$("select#isSurveyRequestor<?php echo $rrows['id']; ?>").val(),active:$("select#active<?php echo $rrows['id']; ?>").val(),id: $("input#id<?php echo $rrows['id']; ?>").val()} ,function(data){ $("#msg<?php echo $rrows['id']; ?>").html(data); });setTimeout(function(){location.reload()},750);' class="inline-flex items-center px-2 py-1 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">
 			<a  onclick='$("#edit<?php echo $rrows['id'];?>").hide();' href="javascript:void(0);" class="inline-flex items-center px-2 py-1 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150">close</a>
 
 		  <div style="color:red" id="msg<?php echo $rrows['id']; ?>" name="msg<?php echo $rrows['id']; ?>"></div>
@@ -252,8 +258,8 @@ list($active) = mysql_fetch_row($rs_active);
 	  if($_POST['doSubmit'] == 'Create')
 {
 
-	mysql_query("INSERT INTO rental_request (`name`,`isclaimsHandler`,`active`)
-				 VALUES ('$post[name]','$post[isclaimsHandler]',1)
+	mysql_query("INSERT INTO rental_request (`name`,`isclaimsHandler`,`active`,`isSurveyRequestor`)
+				 VALUES ('$post[name]','$post[isclaimsHandler]',1,'$post[isSurveyRequestor]')
 				 ") or die(mysql_error());
 
 	echo "<div class=\"msg\">Rental/Claim Person Created.</div>";
@@ -275,6 +281,15 @@ list($active) = mysql_fetch_row($rs_active);
 									<div class="table-cell text-right p-2">Is Claims Handler</div>
 									<div class="table-cell p-2">
 										<select name="isclaimsHandler" id="isclaimsHandler" class="border py-1 px-1 text-grey-darkest w-4/5 rounded-md shadow-sm">
+											<option value="0">No</option>
+											<option value="1">Yes</option>
+										</select>
+									</div>
+								</div>
+								<div class="table-row">
+									<div class="table-cell text-right p-2">Is Survey Requestor</div>
+									<div class="table-cell p-2">
+										<select name="isSurveyRequestor" id="isSurveyRequestor" class="border py-1 px-1 text-grey-darkest w-4/5 rounded-md shadow-sm">
 											<option value="0">No</option>
 											<option value="1">Yes</option>
 										</select>

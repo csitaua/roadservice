@@ -127,8 +127,10 @@ $rs_settings = mysql_query("select * from users where id='$_SESSION[user_id]'");
 				?>
 				</br>
 				<a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin.php">Admin CP </a><br>
-					<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_attendees.php">Admin Attendee CP </a><br>
-					<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_rentalclaims.php">Admin Rental/Claim Person CP </a>
+				<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_adjusters.php">Admin Adjuster CP </a><br>
+				<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_attendees.php">Admin Attendee CP </a><br>
+				<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_rentalclaims.php">Admin Rental/Claim Person CP </a><br>
+				<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_rental_fleet.php">Admin Rental Fleet CP </a>
 			<?php } ?>
 			</div>
 		</td>

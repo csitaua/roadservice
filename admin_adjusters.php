@@ -102,7 +102,8 @@ list($active) = mysql_fetch_row($rs_active);
       <a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin.php">Admin CP </a><br>
 			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_adjusters.php">Admin Adjuster CP </a><br>
 			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_attendees.php">Admin Attendee CP </a><br>
-			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_rentalclaims.php">Admin Rental/Claim Person CP </a>
+			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_rentalclaims.php">Admin Rental/Claim Person CP </a><br>
+			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_rental_fleet.php">Admin Rental Fleet CP </a>
 		<?php } ?>
 	</div>
 	</td>
@@ -172,8 +173,8 @@ list($active) = mysql_fetch_row($rs_active);
           <tr class="bg-gray-400">
             <th class="w-1/12 text-left"><strong>&nbsp;</strong></th>
             <th class="w-2/12 text-left"><strong>Name</strong></th>
-            <th class="w-3/12 text-left"><strong>Approve</strong></th>
-            <th class="w-3/12 text-left"><strong>Approve Non Preferred</strong></th>
+            <th class="w-3/12 text-left"><strong>Approve Preferred Garage</strong></th>
+            <th class="w-3/12 text-left"><strong>Approve Non-Preferred Garage</strong></th>
             <th class="w-1/12 text-left"><strong>Active</strong></th>
 						<th class="w-2/12 text-left"><strong>&nbsp;</strong></th>
 
