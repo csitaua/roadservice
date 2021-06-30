@@ -6,21 +6,27 @@ Limitations:\n- This script cannot be sold.-
 This script should have copyright notice intact.
 Dont remove it please...\n- This script may not be provided for download except from its original site.\nFor further usage, please contact me.\n/******************** MAIN SETTINGS - PHP LOGIN SCRIPT V2.1 **********************\nPlease complete wherever marked xxxxxxxxx\n/************* MYSQL DATABASE SETTINGS *****************\n1. Specify Database name in $dbname\n2. MySQL host (localhost or remotehost)\n3. MySQL user name with ALL previleges assigned.\n4. MySQL password[\n]Note: If you use cpanel, the name will be like account_database*************************************************************/
 session_start();
-include $_SERVER["DOCUMENT_ROOT"] . "/support/db-info.inc";
+include dirname(__FILE__) . "/support/config.php";
 if(!isset($_SERVER['DOCUMENT_ROOT'])){ if(isset($_SERVER['SCRIPT_FILENAME'])){
 $_SERVER['DOCUMENT_ROOT'] = str_replace( '\\', '/', substr($_SERVER['SCRIPT_FILENAME'], 0, 0-strlen($_SERVER['PHP_SELF'])));
 }; };
 if(!isset($_SERVER['DOCUMENT_ROOT'])){ if(isset($_SERVER['PATH_TRANSLATED'])){
 $_SERVER['DOCUMENT_ROOT'] = str_replace( '\\', '/', substr(str_replace('\\\\', '\\', $_SERVER['PATH_TRANSLATED']), 0, 0-strlen($_SERVER['PHP_SELF'])));
 }; };
+require 'Controllers/Database.php';
 //}
-$link = mysql_connect(DB_HOST, DB_USER, DB_PASS) or die("Couldn't make connection.1".mysql_error());
-$db1= mysql_connect(DB_HOST, DB_USER, DB_PASS) or die("Couldn't make connection.");
-$db = mysql_select_db(DB_NAME, $link) or die("Couldn't select database2".$_SESSION['country'].' z');
+//$link = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die("Couldn't make connection.1");
+//$db1= mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME) or die("Couldn't make connection.");
+//$db = mysqli_select_db(DB_NAME, $link) or die("Couldn't select database2".DB_NAME.' z'.mysqli_error($link));
+/*
 $db2 = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-//$connectionInfo = array( "Database"=> "InsrpoSQL_ARU" , "UID"=>"exportsa", "PWD"=>"nvsql2304@@",'ReturnDatesAsStrings'=>true);
-$connt = mssql_connect( HOST2, USER_NAME2 ,PASSWORD2);
-$conn=mssql_select_db(DB_NAME2,$connt);
+$connectionInfo = array( "Database"=> DB_NAME2 , "UID"=>USER_NAME2, "PWD"=>PASSWORD2,'ReturnDatesAsStrings'=>true);
+$conn = sqlsrv_connect( HOST2, $connectionInfo);
+if( $conn === false ) {
+     die( print_r( sqlsrv_errors(), true));
+}*/
+//$connt = mssql_connect( HOST2, USER_NAME2 ,PASSWORD2);
+//$conn=mssql_select_db(DB_NAME2,$connt);
 //$inspro=new PDO("sqlsrv:Server=".$serverName.";Database=insproSQL", "exportsa", "nvsql2304@@");
 //$mysqli = new mysqli("localhost", DB_USER, DB_PASS, DB_NAME);
 //if ($mysqli->connect_errno) {
@@ -70,8 +76,8 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['user_name']) )
 	/* we double check cookie expiry time against stored in database */
 
 	$cookie_user_id  = filter($_COOKIE['user_id']);
-	$rs_ctime = mysql_query("select `ckey`,`ctime` from `users` where `id` ='$cookie_user_id'") or die(mysql_error());
-	list($ckey,$ctime) = mysql_fetch_row($rs_ctime);
+	$rs_ctime = mysqli_query("select `ckey`,`ctime` from `users` where `id` ='$cookie_user_id'") or die(mysqli_error());
+	list($ckey,$ctime) = mysqli_fetch_row($rs_ctime);
 	// coookie expiry
 	if( (time() - $ctime) > 60*60*24*COOKIE_TIME_OUT) {
 		logout();
@@ -85,7 +91,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['user_name']) )
 		  $_SESSION['user_name'] = $_COOKIE['user_name'];
 		  $_SESSION['DEV']=$_COOKIE['DEV'];
 		/* query user level from database instead of storing in cookies */
-		  list($user_level) = mysql_fetch_row(mysql_query("select user_level from users where id='$_SESSION[user_id]'"));
+		  list($user_level) = mysqli_fetch_row(mysqli_query("select user_level from users where id='$_SESSION[user_id]'"));
 		  $_SESSION['user_level'] = $user_level;
 		  $_SESSION['HTTP_USER_AGENT'] = md5($_SERVER['HTTP_USER_AGENT']);
 
@@ -103,8 +109,8 @@ function filter($data) {
 
 	if (get_magic_quotes_gpc())
 		$data = stripslashes($data);
-
-	$data = mysql_real_escape_string($data);
+  $mysqli = new Controllers\Database();
+	$data = $mysqli->connection->mysqli_real_escape_string($data);
 
 	return $data;
 }
@@ -199,9 +205,9 @@ function logout()
 global $db;
 session_start();
 if(isset($_SESSION['user_id']) || isset($_COOKIE['user_id'])) {
-mysql_query("update `users`
+mysqli_query("update `users`
 			set `ckey`= '', `ctime`= ''
-			where `id`='$_SESSION[user_id]' OR  `id` = '$_COOKIE[user_id]'") or die(mysql_error());
+			where `id`='$_SESSION[user_id]' OR  `id` = '$_COOKIE[user_id]'") or die(mysqli_error());
 }
 /************ Delete the sessions****************/
 unset($_SESSION['user_id']);
@@ -277,20 +283,20 @@ function isAdmin(){
 }
 function getUserFName(){
 	$sql = "SELECT * FROM users WHERE id=".$_SESSION['user_id'];
-	$rs = mysql_query($sql);
-	$row = mysql_fetch_array($rs);
+	$rs = mysqli_query($sql);
+	$row = mysqli_fetch_array($rs);
 	return $row['full_name'];
 }
 function getUserFNameID($id){
 	$sql = "SELECT * FROM users WHERE id=".$id;
-	$rs = mysql_query($sql);
-	$row = mysql_fetch_array($rs);
+	$rs = mysqli_query($sql);
+	$row = mysqli_fetch_array($rs);
 	return $row['full_name'];
 }
 function isPolice(){
 	$sql = "SELECT * FROM users WHERE id=".$_SESSION['user_id'];
-	$rs = mysql_query($sql);
-	$row = mysql_fetch_array($rs);
+	$rs = mysqli_query($sql);
+	$row = mysqli_fetch_array($rs);
 	return $row['police'];
 }
 function sendEmail($to,$from,$subject,$message){
@@ -331,8 +337,8 @@ function getCurrency(){
 }
 function getClaimsEmail(){
 	$sql="SELECT * FROM `country_info` WHERE `country`='".$_SESSION['country']."'";
-	$rs=mysql_query($sql);
-	$row=mysql_fetch_array($rs);
+	$rs=mysqli_query($sql);
+	$row=mysqli_fetch_array($rs);
 	return $row['email'];
 }
 ?>
