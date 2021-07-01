@@ -1,5 +1,6 @@
 <?php
 include 'dbc.php';
+include 'support/function.php';
 page_protect();
 
 if(!checkAdmin()) {
@@ -68,15 +69,9 @@ list($active) = mysql_fetch_row($rs_active);
 <html>
 <head>
 <title>Attendees Administration Page</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="styles.css" rel="stylesheet" type="text/css">
-<link href="css/tailwind.css" rel="stylesheet">
-<script language="JavaScript" type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
-
-</head>
-
-<body class="font-sans antialiased">
+
+<?php echo adminMenu(); ?>
+
 <div class="min-h-screen bg-gray-100 p-4">
 <header class="bg-white shadow">
 	<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -86,28 +81,6 @@ list($active) = mysql_fetch_row($rs_active);
  </div>
 </header>
 <div class="py-12">
-<table class="table-fixed">
-  <tr>
-    <td class="w-1/5 align-top px-6 py-6">
-		<div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
-		<?php if (isset($_SESSION['user_id'])) {?>
-		  <h2 class="font-semibold text-lg text-gray-800 leading-tight">My Account</h2>
-		  <a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="./">Home</a><br>
-		  <a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="myaccount.php">My Account</a><br>
-	    <a class="underline text-base text-blue-600 hover:text-blue-800 visited:text-purple-600" href="logout.php">Logout </a><br>
-		<?php }
-		if (checkAdmin()) {
-		/*******************************END**************************/
-		?>
-      <a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin.php">Admin CP </a><br>
-			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_adjusters.php">Admin Adjuster CP </a><br>
-			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_attendees.php">Admin Attendee CP </a><br>
-			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_rentalclaims.php">Admin Rental/Claim Person CP </a><br>
-			<a class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600" href="admin_rental_fleet.php">Admin Rental Fleet CP </a>
-		<?php } ?>
-	</div>
-	</td>
-  <td class="w-4/5 align-top px-6 py-6">
 		<div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-6 py-6">
       <table class="text-base table-fixed w-full">
         <tr>
@@ -286,10 +259,7 @@ list($active) = mysql_fetch_row($rs_active);
       <p>&nbsp;</p>
       <p>&nbsp;</p>
       <p>&nbsp;</p></td>
-    <td width="12%">&nbsp;</td>
 	</div>
-  </tr>
-</table>
 </div>
 </div>
 </body>

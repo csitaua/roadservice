@@ -254,6 +254,8 @@ return $string;
 
 function menu(){
 
+	DEFINE(MENU_BG_COLOR,'yellow');
+
 	$string = '<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -272,46 +274,119 @@ function menu(){
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-
-
-<!-- <link rel="shortcut icon" type="image/x-icon" href="menu/CSS/dropdown/transitional/themes/nvidia.com/images/favicon.ico" /> -->
-
+<link href="css/tailwind.css" rel="stylesheet">
+<link href="css/cu_tw.css" rel="stylesheet">
 <link href="menu/helper.css" media="screen" rel="stylesheet" type="text/css" />
-
 <link href="menu/css/dropdown/dropdown.css" media="all" rel="stylesheet" type="text/css" />
-
 <link href="menu/default.advanced.css" media="all" rel="stylesheet" type="text/css" />
-
 <script src="validator/gen_validatorv4.js" type="text/javascript"></script>
-
 </head>
 
-<body>
+<body class="font-sans antialiased">
+<!--[START-LX0]<script type="text/javascript" src="js/menu.js"></script> <[END-LX0]-->
 
+<nav class="relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-'.MENU_BG_COLOR.'-500 mb-3 rounded">
+<div class="p-1">
 
+  <div class="dropdown inline-block relative">
+    <button class="bg-'.MENU_BG_COLOR.'-500 text-gray-50 font-semibold px-2 rounded inline-flex items-center">
+      <span class="mr-1"><a href="/">Home</a></span>
+    </button>
+  </div>
 
-<!--
+	<div class="dropdown inline-block relative">
+    <button class="bg-'.MENU_BG_COLOR.'-500 text-gray-50 font-semibold px-2 rounded inline-flex items-center">
+      <span class="mr-1"><a href="check_ins.php">Car</a></span>
+    </button>
+  </div>
 
-<h1><table width="1200">
+	<div class="dropdown inline-block relative">
+    <button class="bg-'.MENU_BG_COLOR.'-500 text-gray-50 font-semibold px-2 rounded inline-flex items-center">
+      <span class="mr-1">Check Insurance</span>
+      <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
+    </button>
+    <ul class="dropdown-menu absolute hidden text-gray-50 pt-1">
+      <li class=""><a class="rounded-t bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="check_ins.php">Car</a></li>
+      <li class=""><a class="rounded-b bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="check_day_value.php">Check Day Value</a></li>
+    </ul>
+  </div>
 
-	<tr>
+	<div class="dropdown inline-block relative">
+    <button class="bg-'.MENU_BG_COLOR.'-500 text-gray-50 font-semibold px-2 rounded inline-flex items-center">
+      <span class="mr-1">Add Service Call</span>
+      <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
+    </button>
+    <ul class="dropdown-menu absolute hidden text-gray-50 pt-1">
+      <li class=""><a class="rounded-t bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="new_sc.php"">Car</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="new_rental.php">Rental</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="new_te.php">Travel</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="blacklist.php">Blacklist</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="new_gc.php">General Claim</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="ins_drivers_license.php">Driver License</a></li>
+      <li class=""><a class="rounded-b bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="new_car_wash.php">Carwash</a></li>
+    </ul>
+  </div>
 
-		<td><img src="images/banner-right.jpg" width="1200" /></td>
+	<div class="dropdown inline-block relative">
+		<button class="bg-'.MENU_BG_COLOR.'-500 text-gray-50 font-semibold px-2 rounded inline-flex items-center">
+			<span class="mr-1">View Lists</span>
+			<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
+		</button>
+		<ul class="dropdown-menu absolute hidden text-gray-50 pt-1">
+			<li class=""><a class="rounded-t bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="index.php">Car/Service</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="survey_list.php">Survey</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="gc_list.php">General Claims List</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="rental_list.php">Rental</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="car_wash_list.php">Car Wash</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="incoming.php">Incoming Calls</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="list_te.php">Travel</a></li>
+			<li class=""><a class="rounded-b bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="blacklist_view.php">Blacklist</a></li>
+		</ul>
+	</div>
 
-	</tr>
+	<div class="dropdown inline-block relative">
+		<button class="bg-'.MENU_BG_COLOR.'-500 text-gray-50 font-semibold px-2 rounded inline-flex items-center">
+			<span class="mr-1">Reports</span>
+			<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
+		</button>
+		<ul class="dropdown-menu absolute hidden text-gray-50 pt-1">
+			<li class=""><a class="rounded-t bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="summary_range.php">Date Range</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="summary_monthly.php">Monthly</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="report_detail.php">Detailed</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="report_scphour.php">Service Call Per Hour</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="top_req.php">Top 50</a></li>
+			<li class=""><a class="bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="report_towcom.php">Towing Commission</a></li>
+			<li class=""><a class="rounded-b bg-'.MENU_BG_COLOR.'-500 hover:bg-'.MENU_BG_COLOR.'-600 py-2 px-4 block whitespace-no-wrap" href="report_rental.php">Rental</a></li>
+		</ul>
+	</div>
 
-</table>
+	<div class="dropdown inline-block relative">
+    <button class="bg-'.MENU_BG_COLOR.'-500 text-gray-50 font-semibold px-2 rounded inline-flex items-center">
+      <span class="mr-1"><a href="myaccount.php">My Account</a></span>
+    </button>
+  </div>';
 
-</h1> -->
+	if(isAdmin()){
+		$string = $string. '
+			<div class="dropdown inline-block relative">
+		    <button class="bg-'.MENU_BG_COLOR.'-500 text-gray-50 font-semibold px-2 rounded inline-flex items-center">
+		      <span class="mr-1"><a href="admin.php">Admin CP</a></span>
+		    </button>
+		  </div>
+			';
+	}
 
-<!--[START-LX0]--><script type="text/javascript" src="js/menu.js"></script><!--[END-LX0]-->
+$string = $string.'
+<div class="dropdown inline-block relative">
+	<button class="bg-'.MENU_BG_COLOR.'-500 text-gray-50 font-semibold px-2 rounded inline-flex items-center">
+		<span class="mr-1"><a href="logout.php">Logout</a></span>
+	</button>
+</div>
 
-
-
-
+</div>
+</nav>
 
 <p>&nbsp;</p>
-
 ';
 
 
